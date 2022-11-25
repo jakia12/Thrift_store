@@ -36,11 +36,14 @@ const SignUp = () => {
 
 
 
-
+    if (token) {
+        alert('token is taken');
+        navigate('/');
+    }
 
     //submit the form
     const handleSignUp = (data) => {
-
+        console.log(data.userType);
 
         createUser(data.email, data.password)
             .then((res) => {
@@ -67,7 +70,7 @@ const SignUp = () => {
             //display user
             updateUserProfile(profile)
                 .then(() => {
-                    saveUser(data.name, data.email);
+                    saveUser(data.name, data.email, data.userType);
                 })
                 .catch(err => console.log(err))
         }
@@ -76,12 +79,15 @@ const SignUp = () => {
 
 
 
-    const saveUser = (name, email) => {
+    const saveUser = (name, email, userType) => {
 
         const user = {
             name: name,
-            email: email
+            email: email,
+            userType: userType
         };
+
+        console.log(user);
 
         fetch('http://localhost:5000/users', {
             method: 'POST',
@@ -94,10 +100,7 @@ const SignUp = () => {
             .then(data => {
                 console.log(data);
                 setCreatedUserEmail(email);
-                if (token) {
-                    alert('token is taken');
-                    navigate('/');
-                }
+
 
             })
             .catch(err => console.log(err))
