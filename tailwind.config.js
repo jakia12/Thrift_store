@@ -6,6 +6,13 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    screens: {
+      xs: '480px',
+      sm: '768px',
+      md: '992px',
+      lg: '1024px',
+      xl: '1440px',
+    },
     container: {
       center: true,
     },
@@ -17,16 +24,7 @@ module.exports = {
       roman: 'upper-roman',
     }
     ,
-    screens: {
-      'sm': '576px',
-      // => @media (min-width: 576px) { ... }
 
-      'md': '960px',
-      // => @media (min-width: 960px) { ... }
-
-      'lg': '1200px',
-      // => @media (min-width: 1440px) { ... }
-    },
     colors: {
       firstCol: "#FF5E2B",
       secondCol: "#EC5727",

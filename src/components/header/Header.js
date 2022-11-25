@@ -1,7 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { AuthState } from '../../context/AuthProvider'
 
 const Header = () => {
+    const { user, logOut, setLoading } = AuthState();
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+
+            })
+            .catch(err => console.log(err))
+    }
     return (
         <div>
 
@@ -23,14 +33,30 @@ const Header = () => {
                             <li>
                                 <Link to="/shop" className="block py-2 pl-3 pr-4   rounded md:bg-transparent text-darkBlack md:p-0 md:darkBlack:text-white darkBlack:bg-blue-600 md:darkBlack:bg-transparent" aria-current="page">Shop</Link>
                             </li>
-                            <li>
-                                <Link to="/dashboard" className="block py-2 pl-3 pr-4   rounded md:bg-transparent text-darkBlack md:p-0 md:darkBlack:text-white darkBlack:bg-blue-600 md:darkBlack:bg-transparent" aria-current="page">Dashboard</Link>
-                            </li>
-                            <li>
-                                <Link to="/login">
-                                    <button className="py-2.5 hover:bg-firstCol  hover:text-white px-7 border border-firstCol bg-white text-firstCol rounded-lg">Login</button>
-                                </Link>
-                            </li>
+                            {
+                                user?.email ? (
+                                    <>
+                                        <li>
+                                            <Link to="/dashboard" className="block py-2 pl-3 pr-4   rounded md:bg-transparent text-darkBlack md:p-0 md:darkBlack:text-white darkBlack:bg-blue-600 md:darkBlack:bg-transparent" aria-current="page">Dashboard</Link>
+                                        </li>
+                                        <li>
+
+                                            <button
+                                                className="py-2.5 hover:bg-firstCol  hover:text-white px-7 border border-firstCol bg-white text-firstCol rounded-lg"
+                                                onClick={handleLogOut}
+                                            >Log Out</button>
+
+                                        </li>
+                                    </>
+                                ) : (
+                                    <li>
+                                        <Link to="/login">
+                                            <button className="py-2.5 hover:bg-firstCol  hover:text-white px-7 border border-firstCol bg-white text-firstCol rounded-lg">Login</button>
+                                        </Link>
+                                    </li>
+                                )
+                            }
+
 
 
                         </ul>
