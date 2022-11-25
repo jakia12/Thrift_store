@@ -27,7 +27,9 @@ const Header = () => {
                                 <Link to="/dashboard" className="block py-2 pl-3 pr-4   rounded md:bg-transparent text-darkBlack md:p-0 md:darkBlack:text-white darkBlack:bg-blue-600 md:darkBlack:bg-transparent" aria-current="page">Dashboard</Link>
                             </li>
                             <li>
-                                <button className="py-2.5 hover:bg-firstCol  hover:text-white px-7 border border-firstCol bg-white text-firstCol rounded-lg">Login</button>
+                                <Link to="/login">
+                                    <button className="py-2.5 hover:bg-firstCol  hover:text-white px-7 border border-firstCol bg-white text-firstCol rounded-lg">Login</button>
+                                </Link>
                             </li>
 
 
