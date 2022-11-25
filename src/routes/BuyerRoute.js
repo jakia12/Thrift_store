@@ -3,12 +3,13 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { AuthState } from '../context/AuthProvider'
 import useAdmin from '../hooks/useAdmin';
 import Spinner from '../components/spinner/Spinner';
+import useBuyer from '../hooks/useBuyer';
 
 const BuyerRoute = ({ children }) => {
 
     const { user, loading } = AuthState();
 
-    const [isBuyer, isBuyerLoading] = useAdmin(user?.email);
+    const [isBuyer, isBuyerLoading] = useBuyer(user?.email);
 
 
     //navigate user to the login page when not logged in 
