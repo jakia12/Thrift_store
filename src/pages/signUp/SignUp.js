@@ -11,10 +11,13 @@ import useToken from '../../hooks/useToken';
 const SignUp = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const { user, createUser, setLoading, updateUserProfile } = AuthState();
+    const { user, createUser, setLoading, updateUserProfile, setUserTypeVal, userTypeVal } = AuthState();
 
     const [createdUserEmail, setCreatedUserEmail] = useState('');
 
+    const [value, setValue] = useState('');
+
+    // setUserTypeVal(value);
     //destructure token from use usetoken
 
 
@@ -51,7 +54,16 @@ const SignUp = () => {
                 console.log(user);
 
                 handleUpdateUser();
+                setValue(data.userType);
 
+                setValue((state) => {
+                    console.log(state);
+
+                    return state;
+                });
+
+                setUserTypeVal(value);
+                //console.log(userTypeVal);
 
 
             })
@@ -71,6 +83,7 @@ const SignUp = () => {
             updateUserProfile(profile)
                 .then(() => {
                     saveUser(data.name, data.email, data.userType);
+
                 })
                 .catch(err => console.log(err))
         }

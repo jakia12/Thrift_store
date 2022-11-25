@@ -25,7 +25,9 @@ const Login = () => {
     const [loginUserEmail, setLoginUserEmail] = useState('');
     const [token] = useToken(loginUserEmail);
 
-
+    if (token) {
+        navigate(from, { replace: true })
+    }
     //submit the form
     const handleLogin = (data) => {
 
@@ -35,9 +37,7 @@ const Login = () => {
                 console.log(user);
                 alert('user logged in successfully');
                 setLoginUserEmail(data.email);
-                if (token) {
-                    navigate(from, { replace: true })
-                }
+
 
             })
             .catch(err => {

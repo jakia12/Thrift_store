@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/header/Header';
 import { AuthState } from '../../context/AuthProvider';
 import { Link, Outlet } from 'react-router-dom';
+import useSeller from '../../hooks/useSeller';
+import useBuyer from '../../hooks/useBuyer';
 
 const DashboardLayout = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -11,32 +13,50 @@ const DashboardLayout = () => {
     }
 
 
-    const { user } = AuthState();
+    const { user, userTypeVal, setUserTypeVal } = AuthState();
+
+    const [userData, setUserData] = useState('');
 
     //const [isAdmin] = useAdmin(user?.email);
+
+    // get user type data
+
+    const [isSeller] = useSeller(user?.email);
+
+    const [isBuyer] = useBuyer(user?.email);
+
 
     return (
         <>
             <Header />
             <section className=''>
-                <div className="container  mx-auto">
+                <div className="container w-full lg:max-w-6xl   mx-auto">
                     <div className="md:flex">
                         <div className="w-3/12 lg:block hidden">
                             <div id="drawer-navigation" className="mr-3 shadow-lg shadow-gray-100 z-40 h-screen p-4 overflow-y-auto bg-darkBlack w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-navigation-label">
                                 <div className="py-4 overflow-y-auto">
                                     <ul className="space-y-2">
-                                        <li>
+                                        {
+                                            isBuyer && <li>
 
-                                            <Link to="/dashboard" className="flex items-center p-2 text-base font-normal text-gray-100 rounded-lg dark:text-white dark:hover:bg-gray-700">
-                                                <svg aria-hidden="true" className="w-6 h-6 text-gray-200 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
-                                                <span className="ml-3">My Orders</span>
-                                            </Link>
-                                        </li>
-                                        <li>
+                                                <Link to="/dashboard" className="flex items-center p-2 text-base font-normal text-gray-100 rounded-lg dark:text-white dark:hover:bg-gray-700">
+                                                    <svg aria-hidden="true" className="w-6 h-6 text-gray-200 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
+                                                    <span className="ml-3">My Orders</span>
+                                                </Link>
+                                            </li>
+                                        }
+                                        {isSeller && <li>
 
                                             <Link to="/dashboard/addProduct" className="flex items-center p-2 text-base font-normal text-gray-100 rounded-lg dark:text-white dark:hover:bg-gray-700">
                                                 <svg aria-hidden="true" className="w-6 h-6 text-gray-200 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
                                                 <span className="ml-3">Add Products </span>
+                                            </Link>
+                                        </li>}
+                                        <li>
+
+                                            <Link to="/dashboard/allUsers" className="flex items-center p-2 text-base font-normal text-gray-100 rounded-lg dark:text-white dark:hover:bg-gray-700">
+                                                <svg aria-hidden="true" className="w-6 h-6 text-gray-200 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
+                                                <span className="ml-3">All Users </span>
                                             </Link>
                                         </li>
 

@@ -10,6 +10,10 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    //get the user type
+
+    const [userTypeVal, setUserTypeVal] = useState('');
+
     //email login
 
     //sign up
@@ -54,7 +58,7 @@ const AuthProvider = ({ children }) => {
         return sendPasswordResetEmail(auth, email);
     }
 
-    const getInfo = { user, setLoading, loading, createUser, logOut, login, updateUserProfile, resetPassword }
+    const getInfo = { user, setLoading, loading, createUser, logOut, login, updateUserProfile, resetPassword, userTypeVal, setUserTypeVal }
 
     return (
         <AuthContext.Provider value={getInfo}>
