@@ -36,16 +36,21 @@ const AddProduct = () => {
 
                     //all product data
                     const product = {
+
                         name: data.name,
-                        category: data.category,
-                        price: data.price,
+                        categoryName: data.category,
+                        categoryId: data.categoryId,
+                        image: imgData.data.url,
+                        originalPrice: data.originalPrice,
+                        resalePrice: data.resalePrice,
                         productCondition: data.conditionType,
                         mobile: data.mobile,
                         location: data.location,
                         description: data.description,
-                        yearOfPurchase: data.purchaseYear
+                        yearOfPurchase: data.purchaseYear,
+                        postDate: new Date()
                     }
-
+                    console.log(product);
                     //send data to the server
                     fetch('http://localhost:5000/products', {
                         method: "POST",
@@ -61,7 +66,7 @@ const AddProduct = () => {
                                 alert('Product is added successfully');
                             }
 
-                            navigate('/dashboard/AddProduct');
+                            navigate('/dashboard/myProducts');
 
                         })
                         .catch(err => console.log(err))
@@ -118,26 +123,55 @@ const AddProduct = () => {
                                 })}
                             >
                                 <option value="" disabled selected>Choose a category</option>
-                                <option value="US">United States</option>
-                                <option value="CA">Canada</option>
-                                <option value="FR">France</option>
-                                <option value="DE">Germany</option>
+                                <option value="Polo-shirt">Polo-shirt</option>
+                                <option value="Sleveless-middi">Sleveless-middi</option>
+                                <option value="Sweat-shirt">Sweat-shirt</option>
+                                <option value="Hoodie">Hoodie</option>
+                                <option value="T-shirt">T-shirt</option>
                             </select>
                             {errors.category && <p className='text-red-500 mt-1'>{errors.category.message}</p>}
+                        </div>
+                        <div className="mb-1">
+                            <input
+                                type="text"
+                                id="catId"
+                                className="bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 border border-gray-300 focus:border-blue-500" placeholder="Id must be similar for individual category"
+                                {...register("categoryId", {
+                                    required: "Category Id is required",
+
+
+                                })}
+                            />
+                            {errors.categoryId && <p className='text-red-500 mt-1'>{errors.categoryId.message}</p>}
                         </div>
                         <div className="mb-1">
 
                             <input
                                 type="text"
-                                id="price"
-                                className="bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 border border-gray-300 focus:border-blue-500" placeholder="Product Price"
-                                {...register("price", {
-                                    required: "Price is required",
+                                id="originalPrice"
+                                className="bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 border border-gray-300 focus:border-blue-500" placeholder="Product Original Price"
+                                {...register("originalPrice", {
+                                    required: "Original Price is required",
 
 
                                 })}
                             />
-                            {errors.price && <p className='text-red-500 mt-1'>{errors.price.message}</p>}
+                            {errors.originalPrice && <p className='text-red-500 mt-1'>{errors.originalPrice.message}</p>}
+                        </div>
+                        <div className="mb-1">
+
+                            <input
+                                type="text"
+                                id="resalePrice"
+                                className="bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 border border-gray-300 focus:border-blue-500" placeholder="Product Resale Price"
+                                {...register("resalePrice", {
+                                    required: "Resale Price is required",
+
+
+                                })}
+                            />
+                            {errors.resalePrice && <p className='text-red-500 mt-1'>{errors.resalePrice.message}</p>}
+
                         </div>
                         <div className="mb-1">
                             <select id="condition" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
