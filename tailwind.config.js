@@ -26,8 +26,8 @@ module.exports = {
     ,
 
     colors: {
-      firstCol: "#FF5E2B",
-      secondCol: "#EC5727",
+      firstCol: "#DA3C3C",
+      secondCol: "#C13030",
       rose: "#fb7185",
       darkSlate: "#1e293b",
       lightSlate: "#334155",
