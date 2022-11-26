@@ -13,6 +13,7 @@ import AddProduct from '../pages/dashboard/addProduct/AddProduct';
 import AllUsers from '../pages/dashboard/allSellers/AllSellers';
 import AllSellers from '../pages/dashboard/allSellers/AllSellers';
 import AllBuyers from '../pages/dashboard/allBuyers/AllBuyers';
+import AdminRoute from '../routes/AdminRoute'
 
 
 
@@ -30,8 +31,8 @@ export const router = createBrowserRouter(createRoutesFromElements(
         <Route path="/dashboard" element={<DashboardLayout />}>
             <Route path="/dashboard/myOrder" element={<BuyerRoute><MyOrder /></BuyerRoute>} />
             <Route path="/dashboard/addProduct" element={<SellerRoute><AddProduct /></SellerRoute>} />
-            <Route path="/dashboard/allSellers" element={<AllSellers />} />
-            <Route path="/dashboard/allBuyers" element={<AllBuyers />} />
+            <Route path="/dashboard/allSellers" element={<AdminRoute><AllSellers /></AdminRoute>} />
+            <Route path="/dashboard/allBuyers" element={<AdminRoute><AllBuyers /></AdminRoute>} />
 
         </Route>
     </>

@@ -9,3 +9,13 @@
 body {
     font-family: "Montserrat", sans-serif;
 }
+
+
+/*******style for select placeholder********/
+select:required:invalid {
+    color: #666;
+}
+
+option[value=""][disabled] {
+    display: none;
+}

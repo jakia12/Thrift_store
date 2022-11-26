@@ -1,8 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react'
+import { toast } from 'react-toastify';
+import DeleteModal from '../../../components/deleteModal/DeleteModal';
 
 
 const AllBuyers = () => {
+    //save the seller data to delete 
+    const [deletedUser, setDeletedUser] = useState(null);
 
     const [buyerQuery, setBuyerQuery] = useState('buyer');
 
@@ -14,8 +18,40 @@ const AllBuyers = () => {
             return data;
         }
     });
+
+    const handleShow = (buyer) => {
+        setDeletedUser(buyer);
+    }
+
+    //react toastify
+    const customId1 = "custom-id-yes";
+    const customId2 = "custom-id-no";
+    const handleDelete = () => {
+
+        fetch(`http://localhost:5000/users/${deletedUser._id}`, {
+            method: "DELETE"
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.deletedCount > 0) {
+                    // toast.success(`Wow!!! ${deletedUser.name} deleted successfully `, {
+                    //     position: toast.POSITION.TOP_CENTER,
+                    //     toastId: customId1,
+                    //     autoClose: 1000
+                    // });
+                    alert('  sjfljsdfj');
+                    refetch()
+                }
+
+
+            })
+            .catch(err => console.log(err))
+
+    }
+
     return (
-        <section className='py-12 pl-14 '>
+        <section className='py-8 ml-2'>
 
             <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -53,9 +89,21 @@ const AllBuyers = () => {
                                         </button>
                                     </td>
                                     <td class="py-4 px-6">
-                                        <button className='bg-red-600 text-white hover:bg-red-500 rounded-lg text-normal py-3 px-7' type="submit" >
-                                            Delete
-                                        </button>
+                                        <label
+                                            htmlFor="my-modal-3"
+                                            className="bg-red-600 text-white hover:bg-red-500 rounded-lg text-normal py-3 px-7"
+                                            onClick={() => handleShow(buyer)}
+                                        >Delete</label>
+
+                                        {/* Put this part before </body> tag */}
+                                        {
+                                            deletedUser && (
+                                                <DeleteModal
+                                                    handleDelete={handleDelete}
+                                                    deletedUser={deletedUser}
+                                                />
+                                            )
+                                        }
                                     </td>
                                 </tr>
                             ))

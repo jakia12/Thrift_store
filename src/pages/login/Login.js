@@ -76,7 +76,7 @@ const Login = () => {
                             {errors.email && <p className='text-red-500 mt-1'>{errors.email.message}</p>}
                         </div>
                         <div className="mb-1">
-                            <label for="confirm_password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Confirm password</label>
+                            <label for="confirm_password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Password</label>
                             <input
                                 type="password"
                                 id="password"

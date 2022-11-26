@@ -4,15 +4,17 @@ const useBuyer = (email) => {
     const [isBuyer, setIsBuyer] = useState(false);
     const [isBuyerLoading, setIsBuyerLoading] = useState(true);
     useEffect(() => {
-        fetch(`http://localhost:5000/users/buyer/${email}`)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
+        if (email) {
+            fetch(`http://localhost:5000/users/buyer/${email}`)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
 
-                setIsBuyer(data.isBuyer);
-                setIsBuyerLoading(false);
-            })
-            .catch(err => console.log(err))
+                    setIsBuyer(data.isBuyer);
+                    setIsBuyerLoading(false);
+                })
+                .catch(err => console.log(err))
+        }
     }, [email]);
 
     return [isBuyer, isBuyerLoading]
