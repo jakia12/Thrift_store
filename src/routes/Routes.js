@@ -15,6 +15,7 @@ import AllSellers from '../pages/dashboard/allSellers/AllSellers';
 import AllBuyers from '../pages/dashboard/allBuyers/AllBuyers';
 import AdminRoute from '../routes/AdminRoute'
 import MyProduct from '../pages/dashboard/myProducts/MyProduct';
+import CategoryDetails, { loader as categoryLoader } from '../pages/categoryDetails/CategoryDetails';
 
 
 
@@ -23,6 +24,7 @@ export const router = createBrowserRouter(createRoutesFromElements(
         <Route path='/' element={<Main />}>
 
             <Route path="/" element={<Home />} />
+            <Route path="/category/:categoryId" element={<CategoryDetails />} loader={categoryLoader} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
