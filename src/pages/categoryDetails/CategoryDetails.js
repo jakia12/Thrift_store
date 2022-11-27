@@ -61,17 +61,25 @@ const CategoryDetails = () => {
                                             Years of Use : {2023 - parseInt(product.yearOfPurchase)}
                                         </h4>
 
-                                        <div className="mb-4">
+                                        <div className="mb-5 pt-2">
                                             <label
                                                 htmlFor="my-modal-3"
-                                                className="bg-firstCol text-white hover:bg-secondCol rounded-lg text-sm py-2.5 px-6"
+                                                className="bg-firstCol text-white hover:bg-secondCol rounded-lg text-sm py-3 px-6"
                                                 onClick={() => handleShow(product)}
                                             >Purchase Now</label>
 
                                         </div>
-                                        <BookingModal
-                                            product={product}
-                                        />
+                                        {
+                                            productInfo && (
+                                                <BookingModal
+                                                    productInfo={productInfo}
+                                                    setProductInfo={setProductInfo}
+
+                                                />
+                                            )
+
+
+                                        }
                                     </div>
                                 </div>
                             </div>

@@ -1,13 +1,17 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import { AuthState } from '../../context/AuthProvider';
 
-const BookingModal = ({ product }) => {
+const BookingModal = ({ productInfo, setProductInfo, }) => {
     //get the product info by destructuring
-    const { resalePrice, location, name, mobile } = product;
+
+    console.log(productInfo);
+    const { resalePrice, image, location, name, mobile } = productInfo;
 
     //get the logged in user name and email
     const { user } = AuthState();
 
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
 
@@ -22,7 +26,8 @@ const BookingModal = ({ product }) => {
         const mobile = form.mobile.value;
 
         const booking = {
-            productName: name,
+            productName: name ? name : "Not available",
+            productImage: image ? image : "Not available",
             userName,
             email,
             resalePrice,
@@ -32,6 +37,27 @@ const BookingModal = ({ product }) => {
 
         console.log(booking);
 
+        //create booking data and send it to the server
+        fetch('http://localhost:5000/bookings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.acknowledged) {
+                    alert('Your product booked successfully');
+                    setProductInfo(null);
+
+
+                }
+
+            })
+            .catch(err => console.log(err))
     }
     return (
         <div>
@@ -43,7 +69,7 @@ const BookingModal = ({ product }) => {
             <div className="modal">
                 <div className="modal-box relative w-11/12 max-w-xl">
                     <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                    <h2 className="text-2xl text-center py-2 font-semibold">Get {name} Now!</h2>
+                    <h2 className="text-2xl text-center py-3 font-semibold">Get {name} Now!</h2>
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-left">
                         <div className="mb-1">
 
@@ -52,7 +78,7 @@ const BookingModal = ({ product }) => {
                                 name="userName"
 
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                defaultValue={user?.displayName}
+                                defaultValue={user ? user.displayName : "Unauthourized "}
                                 readOnly
                                 disabled
                                 required
@@ -67,7 +93,7 @@ const BookingModal = ({ product }) => {
                                 name="email"
 
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                defaultValue={user?.email}
+                                defaultValue={user ? user.email : "Unauthourized "}
                                 readOnly
                                 disabled
                                 required

@@ -9,6 +9,7 @@ import DashboardLayout from '../pages/dashboard/DashboardLayout';
 import MyOrder from '../pages/dashboard/orders/MyOrder';
 import SellerRoute from '../routes/SellerRoute';
 import BuyerRoute from '../routes/BuyerRoute';
+import PrivateRoute from '../routes/PrivateRoute';
 import AddProduct from '../pages/dashboard/addProduct/AddProduct';
 import AllUsers from '../pages/dashboard/allSellers/AllSellers';
 import AllSellers from '../pages/dashboard/allSellers/AllSellers';
@@ -24,15 +25,15 @@ export const router = createBrowserRouter(createRoutesFromElements(
         <Route path='/' element={<Main />}>
 
             <Route path="/" element={<Home />} />
-            <Route path="/category/:categoryId" element={<CategoryDetails />} loader={categoryLoader} />
+            <Route path="/category/:categoryId" element={<PrivateRoute><CategoryDetails /></PrivateRoute>} loader={categoryLoader} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
 
         </Route>
 
-        <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route path="/dashboard/myOrder" element={<BuyerRoute><MyOrder /></BuyerRoute>} />
+        <Route path="/dashboard" element={<PrivateRoute><DashboardLayout /></PrivateRoute>}>
+            <Route path="/dashboard/myOrders" element={<BuyerRoute><MyOrder /></BuyerRoute>} />
 
             <Route path="/dashboard/addProduct" element={<SellerRoute><AddProduct /></SellerRoute>} />
 

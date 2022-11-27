@@ -79,7 +79,7 @@ const AllBuyers = () => {
                                     <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {buyer.name}
                                     </th>
-                                    <td class="py-4 px-6">
+                                    <td class="py-4 px-6 text-darkBlack text-normal">
                                         {buyer.email}
                                     </td>
 
