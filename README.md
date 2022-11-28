@@ -1,6 +1,6 @@
 # Application Name - Thrift Store
 
-Live site link:  [Thrift store](https://github.com/facebook/create-react-app).
+Live site link:  [Thrift store](https://vendor-store-b2ba5.web.app/).
 
 ## Description 
 
