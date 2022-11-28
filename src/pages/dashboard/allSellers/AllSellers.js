@@ -48,7 +48,7 @@ const AllSellers = () => {
                     //     autoClose: 1000
                     // });
 
-                    alert('  sjfljsdfj');
+                    alert('Seller is deleted successfully');
                     refetch()
                 }
 
@@ -76,6 +76,24 @@ const AllSellers = () => {
             })
             .catch(err => console.log(err))
     }
+
+
+    //verify the seller
+    const handleVerifySeller = (seller) => {
+        fetch(`http://localhost:5000/users/verified/${seller._id}`, {
+            method: 'PUT',
+
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount > 0) {
+                    alert("Seller is verified successfully");
+                    refetch();
+                }
+            })
+            .catch(err => console.log(err))
+    }
     return (
         <section className='py-8 ml-2'>
 
@@ -87,13 +105,13 @@ const AllSellers = () => {
                                 Product name
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                Color
+                                Email
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                Category
+                                Verification status
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                Price
+                                Make Admin
                             </th>
                             <th scope="col" class="py-3 px-6">
                                 Action
@@ -111,12 +129,26 @@ const AllSellers = () => {
                                         {seller.email}
                                     </td>
                                     <td class="py-4 px-6">
-                                        <button className='bg-lightBlue text-white hover:bg-blue-800 rounded-lg text-normal py-3 px-7' type="submit" >
-                                            Unverified
-                                        </button>
+
+                                        {
+                                            seller.verificationStatus === 'Verified' ? (<button
+                                                className='bg-lightBlue text-white hover:bg-blue-800 rounded-lg text-normal py-3 px-7' type="submit"
+
+                                            >
+                                                Verified
+                                            </button>) :
+                                                <button
+                                                    className='bg-lightBlue text-white hover:bg-blue-800 rounded-lg text-normal py-3 px-7' type="submit"
+                                                    onClick={() => handleVerifySeller(seller)}
+                                                >
+                                                    Verify
+                                                </button>
+                                        }
+
                                     </td>
                                     <td class="py-4 px-6">
                                         {seller?.role !== "admin" ? (<button className='bg-lightBlue text-white hover:bg-blue-800 rounded-lg text-normal py-3 px-7' type="submit"
+
                                             onClick={() => handleMakeAdmin(seller)}
                                         >
                                             Make admin

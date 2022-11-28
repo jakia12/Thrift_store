@@ -25,6 +25,23 @@ const MyOrder = () => {
     });
     console.log(bookings)
 
+
+    //delete the booking
+    const handleDelete = (booking) => {
+        fetch(`http://localhost:5000/bookings/${booking._id}`, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.deletedCount > 0) {
+                    alert("Your booking is deleted successfully")
+                    refetch();
+                }
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
         <section className="py-4 ml-2">
 
@@ -54,7 +71,7 @@ const MyOrder = () => {
                             bookings.map((booking) => (
                                 <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                                     <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-
+                                        <img src={booking.productImage} alt="" className="rounded-lg w-20 h-20" />
                                     </th>
                                     <td class="py-4 px-6 text-darkBlack text-normal">
                                         {booking.productName}
@@ -68,7 +85,9 @@ const MyOrder = () => {
                                         </button>
                                     </td>
                                     <td class="py-4 px-6">
-                                        <button className=" text-white py-3 px-7 rounded-lg text-normal  bg-firstCol hover:bg-secondCol" type="submit">
+                                        <button className=" text-white py-3 px-7 rounded-lg text-normal  bg-firstCol hover:bg-secondCol" type="submit"
+                                            onClick={() => handleDelete(booking)}
+                                        >
                                             Delete
                                         </button>
                                     </td>

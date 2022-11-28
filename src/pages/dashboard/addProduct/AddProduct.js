@@ -1,8 +1,12 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { AuthState } from '../../../context/AuthProvider';
 
 const AddProduct = () => {
+
+    //get the logged in user 
+    const { user } = AuthState();
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
@@ -48,7 +52,9 @@ const AddProduct = () => {
                         location: data.location,
                         description: data.description,
                         yearOfPurchase: data.purchaseYear,
-                        postDate: new Date()
+                        postDate: new Date(),
+                        sellerName: user?.displayName,
+                        sellerEmail: user?.email
                     }
                     console.log(product);
                     //send data to the server
@@ -127,7 +133,7 @@ const AddProduct = () => {
                                 <option value="Sleveless-middi">Sleveless-middi</option>
                                 <option value="Sweat-shirt">Sweat-shirt</option>
                                 <option value="Hoodie">Hoodie</option>
-                                <option value="T-shirt">T-shirt</option>
+                                <option value="T-shirt">Mini Skirt</option>
                             </select>
                             {errors.category && <p className='text-red-500 mt-1'>{errors.category.message}</p>}
                         </div>

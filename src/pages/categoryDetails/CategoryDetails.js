@@ -3,12 +3,17 @@ import { useLoaderData } from 'react-router-dom'
 import { AuthState } from '../../context/AuthProvider'
 import { getSingleCategory } from '../../utils/api'
 import SellerPhoto from '../../images/avatar/1.jpg';
-
+import { MdReportProblem } from 'react-icons/md';
 import BookingModal from '../../components/bookingModal/BookingModal';
+import { DataState } from '../../context/DataProvider';
 
 const CategoryDetails = () => {
     //get the user
     const { user } = AuthState();
+
+    //get users data
+
+    const { users } = DataState();
 
     const products = useLoaderData();
 
@@ -18,6 +23,47 @@ const CategoryDetails = () => {
 
     const handleShow = (product) => {
         setProductInfo(product);
+    }
+
+    const handleReport = (product) => {
+
+        const reportedProduct = {
+            productName: product?.name,
+            categoryName: product?.categoryName,
+            image: product?.image,
+            originalPrice: product?.originalPrice,
+            resalePrice: product?.resalePrice,
+            productCondition: product?.productCondition,
+            location: product?.location,
+            yearOfPurchase: product?.yearOfPurchase,
+            postDate: product?.postDate,
+            sellerEmail: product?.sellerEmail
+
+        };
+
+        fetch('http://localhost:5000/reportedProducts', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify(reportedProduct)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.acknowledged) {
+                    alert('Product is added successfully to the reported  items');
+
+                    //setIsAdvertised(!isAdvertised);
+                }
+
+                // navigate('/');
+
+            })
+            .catch(err => console.log(err))
+
+        console.log(reportedProduct);
     }
 
     //console.log(products);
@@ -44,13 +90,30 @@ const CategoryDetails = () => {
                                         </div>
                                         <div className="flex justify-between items-center absolute top-2/3 left-6 cat_content">
                                             <img src={SellerPhoto} alt="" className=" rounded-full border-2 border-firstCol" width="70px" height="70px" />
-                                            <span className="ml-4 text-white">{user?.displayName} </span>
+                                            <div>
+                                                <span className="ml-4 text-white">
+                                                    {users.find((user) => user.verificationStatus === "Verified") ? "verified" : "unvr"
+
+                                                    }
+                                                </span>
+                                                <span className="ml-4 text-white">{user?.displayName} </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="p-5 ml-2 ">
-                                        <h3 className="text-lg font-semibold text-darkBlack mb-4">
-                                            {product.name}
-                                        </h3>
+                                        <div className="flex items-center">
+                                            <h3 className="text-lg font-semibold text-darkBlack mb-4">
+                                                {product.name}
+                                            </h3>
+                                            <button
+                                                className='ml-auto mb-4'
+                                                onClick={() => handleReport(product)}
+                                            >
+                                                <span className="text-gray-400  text-2xl" title='Report to Admin'>
+                                                    <MdReportProblem />
+                                                </span>
+                                            </button>
+                                        </div>
                                         <h4 className="text-normal font-normal text-darkBlack mb-3">
                                             Original Price : ${product.originalPrice}
                                         </h4>

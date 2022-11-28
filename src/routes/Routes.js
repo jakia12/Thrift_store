@@ -17,6 +17,7 @@ import AllBuyers from '../pages/dashboard/allBuyers/AllBuyers';
 import AdminRoute from '../routes/AdminRoute'
 import MyProduct from '../pages/dashboard/myProducts/MyProduct';
 import CategoryDetails, { loader as categoryLoader } from '../pages/categoryDetails/CategoryDetails';
+import ReportedProducts from '../pages/dashboard/reportedProducts/ReportedProducts';
 
 
 
@@ -44,6 +45,8 @@ export const router = createBrowserRouter(createRoutesFromElements(
 
 
             <Route path="/dashboard/allBuyers" element={<AdminRoute><AllBuyers /></AdminRoute>} />
+
+            <Route path="/dashboard/reportedProducts" element={<AdminRoute><ReportedProducts /></AdminRoute>} />
 
         </Route>
     </>
