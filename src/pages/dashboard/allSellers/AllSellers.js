@@ -3,22 +3,27 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify';
 import DeleteModal from '../../../components/deleteModal/DeleteModal';
 import { AuthState } from '../../../context/AuthProvider';
-
+import { AiOutlineCheck } from 'react-icons/ai';
+import { DataState } from '../../../context/DataProvider';
 
 
 const AllSellers = () => {
 
     const { user } = AuthState();
+
+    //get all the sellers data
+
+    //const { sellers, setSellers } = DataState();
+
     //save the seller data to delete 
     const [deletedUser, setDeletedUser] = useState(null);
 
-    //set query state
     const [sellerQuery, setSellerQuery] = useState('seller');
 
     const { data: sellers = [], refetch } = useQuery({
         queryKey: ['sellers'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users?userType=${sellerQuery}`);
+            const res = await fetch(`https://vendor-store-server.vercel.app/users?userType=${sellerQuery}`);
             const data = await res.json();
             return data;
         }
@@ -35,21 +40,24 @@ const AllSellers = () => {
     const customId2 = "custom-id-no";
     const handleDelete = () => {
 
-        fetch(`http://localhost:5000/users/${deletedUser._id}`, {
+        fetch(`https://vendor-store-server.vercel.app/users/${deletedUser._id}`, {
             method: "DELETE"
         })
             .then(res => res.json())
             .then(data => {
                 console.log(data);
                 if (data.deletedCount > 0) {
-                    // toast.success(`Wow!!! ${deletedUser.name} deleted successfully `, {
-                    //     position: toast.POSITION.TOP_CENTER,
-                    //     toastId: customId1,
-                    //     autoClose: 1000
-                    // });
+                    toast.success(`Wow!!! ${deletedUser.name} deleted successfully `, {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastId: customId1,
+                        autoClose: 1000
+                    });
+                    setDeletedUser(null);
+                    refetch();
+                    // const remainingSellers = sellers.filter((seller) => seller._id !== deletedUser._id);
+                    // setSellers(remainingSellers);
 
-                    alert('Seller is deleted successfully');
-                    refetch()
+
                 }
 
 
@@ -62,7 +70,7 @@ const AllSellers = () => {
     //make admin
 
     const handleMakeAdmin = (seller) => {
-        fetch(`http://localhost:5000/users/admin/${seller._id}`, {
+        fetch(`https://vendor-store-server.vercel.app/users/admin/${seller._id}`, {
             method: 'PUT',
 
         })
@@ -70,8 +78,14 @@ const AllSellers = () => {
             .then(data => {
                 console.log(data);
                 if (data.modifiedCount > 0) {
-                    alert("Admin created successfully");
+
+                    toast.success(`Admin is created successfully `, {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastId: customId1,
+                        autoClose: 1000
+                    });
                     refetch();
+
                 }
             })
             .catch(err => console.log(err))
@@ -80,7 +94,7 @@ const AllSellers = () => {
 
     //verify the seller
     const handleVerifySeller = (seller) => {
-        fetch(`http://localhost:5000/users/verified/${seller._id}`, {
+        fetch(`https://vendor-store-server.vercel.app/users/verified/${seller._id}`, {
             method: 'PUT',
 
         })
@@ -88,8 +102,12 @@ const AllSellers = () => {
             .then(data => {
                 console.log(data);
                 if (data.modifiedCount > 0) {
-                    alert("Seller is verified successfully");
-                    refetch();
+                    toast.success(`Seller is verified successfully`, {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastId: customId1,
+                        autoClose: 1000
+                    });
+
                 }
             })
             .catch(err => console.log(err))
@@ -131,12 +149,12 @@ const AllSellers = () => {
                                     <td class="py-4 px-6">
 
                                         {
-                                            seller.verificationStatus === 'Verified' ? (<button
-                                                className='bg-lightBlue text-white hover:bg-blue-800 rounded-lg text-normal py-3 px-7' type="submit"
-
-                                            >
-                                                Verified
-                                            </button>) :
+                                            seller.verificationStatus === 'Verified' ? (
+                                                <button className='flex items-center bg-white   border-2 border-blue-700 text-blue-700 py-2.5 px-7 rounded-lg '>
+                                                    Verified
+                                                    <span className=' text-blue-700 text-normal ml-2'><AiOutlineCheck /></span>
+                                                </button>
+                                            ) :
                                                 <button
                                                     className='bg-lightBlue text-white hover:bg-blue-800 rounded-lg text-normal py-3 px-7' type="submit"
                                                     onClick={() => handleVerifySeller(seller)}
@@ -169,6 +187,8 @@ const AllSellers = () => {
                                                 <DeleteModal
                                                     handleDelete={handleDelete}
                                                     deletedUser={deletedUser}
+
+                                                    setDeletedUser={setDeletedUser}
                                                 />
                                             )
                                         }

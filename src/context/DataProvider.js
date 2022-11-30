@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { createContext, useContext, useEffect, useState } from 'react'
-
+import axios from "axios";
 
 const DataContext = createContext();
 
@@ -14,10 +14,10 @@ const DataProvider = ({ children }) => {
 
     //fetch booking data
     useEffect(() => {
-        fetch('http://localhost:5000/bookings')
+        fetch('https://vendor-store-server.vercel.app/bookings')
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 setBookings(data);
 
             })
@@ -27,7 +27,9 @@ const DataProvider = ({ children }) => {
 
     // fetch advertised data
     useEffect(() => {
-        fetch('http://localhost:5000/advertisedProducts')
+        fetch('https://vendor-store-server.vercel.app/advertisedProducts',
+
+        )
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -41,18 +43,45 @@ const DataProvider = ({ children }) => {
 
     //fetch user data
     useEffect(() => {
-        fetch('http://localhost:5000/users')
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                setUsers(data);
+        // fetch('http://localhost:5000/users')
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         console.log(data);
+        //         setUsers(data);
 
+        //     })
+
+        axios.get('https://vendor-store-server.vercel.app/users')
+            .then((response) => {
+                setUsers(response.data);
             })
+
             .catch(err => console.log(err))
 
     }, []);
 
-    const getInfo = { bookings, advertisedProducts, users }
+
+    //fetch seller data
+
+    //set query state
+    const [sellerQuery, setSellerQuery] = useState('seller');
+
+    const [sellers, setSellers] = useState([]);
+
+    useEffect(() => {
+        axios.get(`https://vendor-store-server.vercel.app/users?userType=${sellerQuery}`)
+            .then((response) => {
+                setSellers(response.data);
+                console.log(sellers);
+            })
+
+            .catch(err => console.log(err))
+
+    }, []);
+
+
+
+    const getInfo = { bookings, advertisedProducts, users, sellers, setSellers }
     return (
         <DataContext.Provider value={getInfo}>
             {children}

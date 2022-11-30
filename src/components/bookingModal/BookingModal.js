@@ -1,6 +1,8 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { AuthState } from '../../context/AuthProvider';
+
 
 const BookingModal = ({ productInfo, setProductInfo, }) => {
     //get the product info by destructuring
@@ -36,21 +38,28 @@ const BookingModal = ({ productInfo, setProductInfo, }) => {
         }
 
         console.log(booking);
+        //react toastify
+        const customId1 = "custom-id-yes";
+        const customId2 = "custom-id-no";
 
         //create booking data and send it to the server
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://vendor-store-server.vercel.app/bookings', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
 
             },
             body: JSON.stringify(booking)
-        })
-            .then(res => res.json())
+        }).then(res => res.json())
             .then(data => {
                 console.log(data);
                 if (data.acknowledged) {
-                    alert('Your product booked successfully');
+                    toast.success(`Wow!!! Your product is booked successfully`, {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastId: customId1,
+                        autoClose: 1000
+                    });
+
                     setProductInfo(null);
 
 

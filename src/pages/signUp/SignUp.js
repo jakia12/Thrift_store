@@ -5,6 +5,7 @@ import './SignUp.css';
 import { AuthState } from '../../context/AuthProvider';
 import { useForm } from 'react-hook-form';
 import useToken from '../../hooks/useToken';
+import { toast } from 'react-toastify';
 
 
 
@@ -40,10 +41,12 @@ const SignUp = () => {
 
 
     if (token) {
-        alert('token is taken');
+
         navigate('/');
     }
-
+    //react toastify
+    const customId1 = "custom-id-yes";
+    const customId2 = "custom-id-no";
     //submit the form
     const handleSignUp = (data) => {
         console.log(data.userType);
@@ -54,6 +57,13 @@ const SignUp = () => {
                 console.log(user);
 
                 handleUpdateUser();
+                toast.success(`Wow!!! User signed up successfully`, {
+                    position: toast.POSITION.TOP_CENTER,
+                    toastId: customId1,
+                    autoClose: 1000
+                });
+
+
                 setValue(data.userType);
 
                 setValue((state) => {
@@ -102,7 +112,7 @@ const SignUp = () => {
 
         console.log(user);
 
-        fetch('http://localhost:5000/users', {
+        fetch('https://vendor-store-server.vercel.app/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

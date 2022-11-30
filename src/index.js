@@ -5,6 +5,8 @@ import App from './App';
 import AuthProvider from './context/AuthProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import DataProvider from './context/DataProvider';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

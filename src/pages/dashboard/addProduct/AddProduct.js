@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { AuthState } from '../../../context/AuthProvider';
 
 const AddProduct = () => {
@@ -14,6 +15,9 @@ const AddProduct = () => {
     //get the secret imgbb api key
     const imgbbApiKey = process.env.REACT_APP_IMG_API_KEY;
 
+    //react toastify
+    const customId1 = "custom-id-yes";
+    const customId2 = "custom-id-no";
     const handleAddProduct = (data) => {
 
         //img upload data
@@ -58,7 +62,7 @@ const AddProduct = () => {
                     }
                     console.log(product);
                     //send data to the server
-                    fetch('http://localhost:5000/products', {
+                    fetch('https://vendor-store-server.vercel.app/products', {
                         method: "POST",
                         headers: {
                             'Content-Type': 'application/json'
@@ -69,7 +73,12 @@ const AddProduct = () => {
                         .then(data => {
                             console.log(data);
                             if (data.acknowledged) {
-                                alert('Product is added successfully');
+                                toast.success(`Wow!!! Your product is added successfully`, {
+                                    position: toast.POSITION.TOP_CENTER,
+                                    toastId: customId1,
+                                    autoClose: 1000
+                                });
+
                             }
 
                             navigate('/dashboard/myProducts');
@@ -86,11 +95,13 @@ const AddProduct = () => {
 
 
     }
+
+
     return (
         <section className=" login_section py-10 bg-lightGray ">
             <div className='container mx-auto lg:max-w-7xl md:px-10 px-6'>
 
-                <div className=' form_wrapper bg-white px-10 py-10 w-full mx-auto lg:max-w-2xl rounded'>
+                <div className=' form_wrapper bg-white px-10 py-10 w-full mx-auto md:max-w-4xl lg:max-w-2xl rounded'>
 
                     <h2 className="text-3xl font-semibold text-dark mt-5 mb-10 text-center">Add Your Product!</h2>
 
@@ -134,6 +145,8 @@ const AddProduct = () => {
                                 <option value="Sweat-shirt">Sweat-shirt</option>
                                 <option value="Hoodie">Hoodie</option>
                                 <option value="T-shirt">Mini Skirt</option>
+                                <option value="Casual">Casual</option>
+                                <option value="Crop-blouse">Crop-blouse</option>
                             </select>
                             {errors.category && <p className='text-red-500 mt-1'>{errors.category.message}</p>}
                         </div>

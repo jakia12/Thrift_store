@@ -6,6 +6,8 @@ import SellerPhoto from '../../images/avatar/1.jpg';
 import { MdReportProblem } from 'react-icons/md';
 import BookingModal from '../../components/bookingModal/BookingModal';
 import { DataState } from '../../context/DataProvider';
+import { toast } from 'react-toastify';
+
 
 const CategoryDetails = () => {
     //get the user
@@ -13,14 +15,16 @@ const CategoryDetails = () => {
 
     //get users data
 
-    const { users } = DataState();
+    const { sellers } = DataState();
 
     const products = useLoaderData();
 
     const [productInfo, setProductInfo] = useState(null);
 
     // name, image, originalPrice, resalePrice, location, postDate, yearOfPurchase 
-
+    //react toastify
+    const customId1 = "custom-id-yes";
+    const customId2 = "custom-id-no";
     const handleShow = (product) => {
         setProductInfo(product);
     }
@@ -37,11 +41,12 @@ const CategoryDetails = () => {
             location: product?.location,
             yearOfPurchase: product?.yearOfPurchase,
             postDate: product?.postDate,
+            sellerName: product?.sellerName,
             sellerEmail: product?.sellerEmail
 
         };
 
-        fetch('http://localhost:5000/reportedProducts', {
+        fetch('https://vendor-store-server.vercel.app/reportedProducts', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -53,7 +58,12 @@ const CategoryDetails = () => {
             .then(data => {
                 console.log(data);
                 if (data.acknowledged) {
-                    alert('Product is added successfully to the reported  items');
+                    toast.success(`Wow!!! 'Product is reported successfully to the reported  items`, {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastId: customId1,
+                        autoClose: 1000
+                    });
+
 
                     //setIsAdvertised(!isAdvertised);
                 }
@@ -65,7 +75,10 @@ const CategoryDetails = () => {
 
         console.log(reportedProduct);
     }
-
+    console.log(sellers);
+    const test = sellers.filter((seller) => seller.verificationStatus === "verified");
+    console.log(test);
+    // const verifiedSeller = test.find((t) => t.verificationStatus === "verified");
     //console.log(products);
     return (
         <section className='py-14 lg:py-20'>
@@ -81,7 +94,7 @@ const CategoryDetails = () => {
                 <div className="flex flex-wrap">
                     {
                         products?.map((product) => (
-                            <div className="sm:w-6/12 md:w-4/12">
+                            <div className="sm:w-6/12 md:w-4/12 xs:mx-auto sm:mx-0">
                                 <div className="m-4 shadow-lg shadow-gray-200">
                                     <div className="relative overlay">
                                         <img src={product.image} alt="" className="rounded w-full prod_img h-96" />
@@ -91,12 +104,13 @@ const CategoryDetails = () => {
                                         <div className="flex justify-between items-center absolute top-2/3 left-6 cat_content">
                                             <img src={SellerPhoto} alt="" className=" rounded-full border-2 border-firstCol" width="70px" height="70px" />
                                             <div>
-                                                <span className="ml-4 text-white">
-                                                    {users.find((user) => user.verificationStatus === "Verified") ? "verified" : "unvr"
+                                                <span className="ml-4 text-white text-normal block text-center">
+                                                    {
+                                                        // verifiedSeller ? "Verified" : "Unverified"
 
                                                     }
                                                 </span>
-                                                <span className="ml-4 text-white">{user?.displayName} </span>
+                                                <span className="ml-4 text-white">{product?.sellerName} </span>
                                             </div>
                                         </div>
                                     </div>
@@ -119,6 +133,9 @@ const CategoryDetails = () => {
                                         </h4>
                                         <h4 className="text-normal font-normal text-darkBlack mb-3">
                                             Resale Price : $ {product.resalePrice}
+                                        </h4>
+                                        <h4 className="text-normal font-normal text-darkBlack mb-3">
+                                            Date of post : {product.postDate.slice(0, 10)}
                                         </h4>
                                         <h4 className="text-normal font-normal text-darkBlack mb-4">
                                             Years of Use : {2023 - parseInt(product.yearOfPurchase)}

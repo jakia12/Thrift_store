@@ -5,14 +5,19 @@ import { AiOutlineGoogle } from 'react-icons/ai';
 import { AuthState } from '../../context/AuthProvider';
 import { useForm } from 'react-hook-form';
 import useToken from '../../hooks/useToken';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { login, setLoading, user } = AuthState();
+    const { login, setLoading, user, googleSignIn } = AuthState();
 
     //form validation by hook form
 
 
+    //handlw jwt user authorization
+    const [loginUserEmail, setLoginUserEmail] = useState('');
+
+    const [token] = useToken(loginUserEmail);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -21,21 +26,32 @@ const Login = () => {
     //error handling while login
     const [error, setError] = useState('');
 
-    //handlw jwt user authorization
-    const [loginUserEmail, setLoginUserEmail] = useState('');
-    const [token] = useToken(loginUserEmail);
+
 
     if (token) {
+        console.log(token);
+
         navigate(from, { replace: true })
+
     }
     //submit the form
-    const handleLogin = (data) => {
 
+    //react toastify
+
+    const handleLogin = (data) => {
+        console.log(data.password);
         login(data.email, data.password)
             .then((res) => {
                 const user = res.user;
+                console.log(data.password);
                 console.log(user);
-                alert('user logged in successfully');
+                toast.success(`Wow!!! User logged in successfully`, {
+                    position: toast.POSITION.TOP_CENTER,
+
+                    autoClose: 1000
+                });
+
+
                 setLoginUserEmail(data.email);
 
 
@@ -47,9 +63,15 @@ const Login = () => {
     }
 
     //google login
-    const handleGoogleLogin = () => {
-        console.log('dfj');
-    }
+    // const handleGoogleLogin = () => {
+    //     googleSignIn()
+    //         .then(res => {
+    //             const user = res.user;
+
+    //             console.log(user);
+    //         })
+    //         .catch(err => console.log(err))
+    // }
     return (
         <section className=" login_section lg:py-20 py-14 bg-nudeBlue ">
             <div className='container mx-auto lg:max-w-7xl md:px-10 px-6'>
@@ -105,7 +127,7 @@ const Login = () => {
                         <button
                             type="button"
                             className="text-white bg-lightBlue hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-14 py-3 mt-6 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                            onClick={handleGoogleLogin}
+                        //onClick={handleGoogleLogin}
                         >
                             <div className="flex items-center">
                                 <span className="text-xl text-white inline-block "><AiOutlineGoogle />

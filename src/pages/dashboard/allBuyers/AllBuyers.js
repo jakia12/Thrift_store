@@ -13,7 +13,7 @@ const AllBuyers = () => {
     const { data: buyers = [], refetch } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users?userType=${buyerQuery}`);
+            const res = await fetch(`https://vendor-store-server.vercel.app/users?userType=${buyerQuery}`);
             const data = await res.json();
             return data;
         }
@@ -28,19 +28,19 @@ const AllBuyers = () => {
     const customId2 = "custom-id-no";
     const handleDelete = () => {
 
-        fetch(`http://localhost:5000/users/${deletedUser._id}`, {
+        fetch(`https://vendor-store-server.vercel.app/users/${deletedUser._id}`, {
             method: "DELETE"
         })
             .then(res => res.json())
             .then(data => {
                 console.log(data);
                 if (data.deletedCount > 0) {
-                    // toast.success(`Wow!!! ${deletedUser.name} deleted successfully `, {
-                    //     position: toast.POSITION.TOP_CENTER,
-                    //     toastId: customId1,
-                    //     autoClose: 1000
-                    // });
-                    alert('  sjfljsdfj');
+                    toast.success(`Wow!!! ${deletedUser.name} deleted successfully `, {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastId: customId1,
+                        autoClose: 1000
+                    });
+
                     refetch()
                 }
 
@@ -50,8 +50,9 @@ const AllBuyers = () => {
 
     }
 
+
     const handleMakeAdmin = (buyer) => {
-        fetch(`http://localhost:5000/users/admin/${buyer._id}`, {
+        fetch(`https://vendor-store-server.vercel.app/users/admin/${buyer._id}`, {
             method: 'PUT',
 
         })
@@ -59,7 +60,13 @@ const AllBuyers = () => {
             .then(data => {
                 console.log(data);
                 if (data.modifiedCount > 0) {
-                    alert("Admin created successfully");
+                    toast.success(`Wow!!! Admin created successfully`, {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastId: customId1,
+                        autoClose: 1000
+                    });
+
+
                     refetch();
                 }
             })

@@ -7,7 +7,7 @@ const ReportedProducts = () => {
         queryKey: ['products'],
         queryFn: async () => {
             try {
-                const res = await fetch('http://localhost:5000/reportedProducts');
+                const res = await fetch('https://vendor-store-server.vercel.app/reportedProducts');
                 const data = await res.json();
                 return data;
             }
@@ -20,7 +20,7 @@ const ReportedProducts = () => {
     //delete the reported products
 
     const handleDelete = (product) => {
-        fetch(`http://localhost:5000/reportedProducts/${product._id}`, {
+        fetch(`https://vendor-store-server.vercel.app/reportedProducts/${product._id}`, {
             method: "DELETE"
         })
             .then(res => res.json())
@@ -76,7 +76,7 @@ const ReportedProducts = () => {
                                         {product.productName}
                                     </td>
                                     <td class="py-4 px-5">
-                                        {product.resalePrice}
+                                        ${product.resalePrice}
                                     </td>
 
 

@@ -12,7 +12,13 @@ const MyOrder = () => {
         queryKey: ['bookings'],
         queryFn: async () => {
             try {
-                const res = await fetch(`http://localhost:5000/bookings?email=${user?.email}`);
+                const res = await fetch(`https://vendor-store-server.vercel.app/bookings?email=${user?.email}`,
+                    {
+                        headers: {
+                            authorization: `bearer ${localStorage.getItem('accessToken')}`
+                        }
+                    }
+                );
 
                 const data = await res.json();
                 console.log(data);
@@ -28,7 +34,7 @@ const MyOrder = () => {
 
     //delete the booking
     const handleDelete = (booking) => {
-        fetch(`http://localhost:5000/bookings/${booking._id}`, {
+        fetch(`https://vendor-store-server.vercel.app/bookings/${booking._id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
@@ -77,7 +83,7 @@ const MyOrder = () => {
                                         {booking.productName}
                                     </td>
                                     <td class="py-4 px-6">
-                                        {booking.resalePrice}
+                                        ${booking.resalePrice}
                                     </td>
                                     <td class="py-4 px-6">
                                         <button className='bg-lightBlue text-white hover:bg-blue-800 rounded-lg text-normal py-3 px-7' type="submit" >

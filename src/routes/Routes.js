@@ -18,6 +18,8 @@ import AdminRoute from '../routes/AdminRoute'
 import MyProduct from '../pages/dashboard/myProducts/MyProduct';
 import CategoryDetails, { loader as categoryLoader } from '../pages/categoryDetails/CategoryDetails';
 import ReportedProducts from '../pages/dashboard/reportedProducts/ReportedProducts';
+import NotFound from '../pages/notFound/NotFound';
+import Blog from "../pages/blog/Blog";
 
 
 
@@ -28,15 +30,18 @@ export const router = createBrowserRouter(createRoutesFromElements(
             <Route path="/" element={<Home />} />
             <Route path="/category/:categoryId" element={<PrivateRoute><CategoryDetails /></PrivateRoute>} loader={categoryLoader} />
             <Route path="/shop" element={<Shop />} />
+            <Route path="/blog" element={<Blog />} />
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
+            <Route path="*" element={<NotFound />} />
+
 
         </Route>
 
         <Route path="/dashboard" element={<PrivateRoute><DashboardLayout /></PrivateRoute>}>
             <Route path="/dashboard/myOrders" element={<BuyerRoute><MyOrder /></BuyerRoute>} />
 
-            <Route path="/dashboard/addProduct" element={<SellerRoute><AddProduct /></SellerRoute>} />
+            <Route path="/dashboard/addProducts" element={<SellerRoute><AddProduct /></SellerRoute>} />
 
             <Route path="/dashboard/myProducts" element={<SellerRoute><MyProduct /></SellerRoute>} />
 
@@ -47,6 +52,7 @@ export const router = createBrowserRouter(createRoutesFromElements(
             <Route path="/dashboard/allBuyers" element={<AdminRoute><AllBuyers /></AdminRoute>} />
 
             <Route path="/dashboard/reportedProducts" element={<AdminRoute><ReportedProducts /></AdminRoute>} />
+            <Route path="*" element={<NotFound />} />
 
         </Route>
     </>
