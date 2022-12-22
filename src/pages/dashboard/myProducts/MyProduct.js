@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { useState } from 'react'
+import { set } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import DeleteModal from '../../../components/deleteModal/DeleteModal';
 import { AuthState } from '../../../context/AuthProvider'
@@ -15,6 +16,8 @@ const MyProduct = () => {
     //get the booking data
     const { bookings, advertisedProducts } = DataState();
 
+    //new advertised products
+    const [newAdvertisedProducts, setNewAdvertisedProducts] = useState([]);
 
     const [productInfo, setProductInfo] = useState(null)
 
@@ -58,6 +61,22 @@ const MyProduct = () => {
 
     const handleAdvertise = (product) => {
 
+        //advertise product on click
+        fetch(`https://vendor-store-server.vercel.app/advertiseProducts/${product._id}`, {
+            method: 'PUT',
+
+        }).then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount > 0) {
+                    toast.success(`Wow!!! Product is added successfully to the advertised items`, {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastId: customId1,
+                        autoClose: 1000
+                    });
+                    refetch();
+                }
+            })
 
         const advertisedProduct = {
             name: product?.name,
@@ -70,6 +89,7 @@ const MyProduct = () => {
             yearOfPurchase: product?.yearOfPurchase,
             postDate: product?.postDate,
             sellerName: product?.sellerName,
+            sellerPhoto: product?.sellerPhoto,
             sellerEmail: product?.sellerEmail,
             mobile: product?.mobile
 
@@ -85,16 +105,7 @@ const MyProduct = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                if (data.acknowledged) {
-                    toast.success(`Wow!!! Product is added successfully to the advertised items`, {
-                        position: toast.POSITION.TOP_CENTER,
-                        toastId: customId1,
-                        autoClose: 1000
-                    });
 
-                    refetch();
-                    //setIsAdvertised(!isAdvertised);
-                }
 
                 // navigate('/');
 
@@ -135,10 +146,10 @@ const MyProduct = () => {
                                 Color
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                Category
+                                Price
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                Price
+                                Selling Status
                             </th>
                             <th scope="col" class="py-3 px-6">
                                 Action
@@ -179,15 +190,29 @@ const MyProduct = () => {
 
 
                                     {
-                                        !bookings.find((booking) => booking.productName === product.name) ? <button className='bg-lightBlue text-white hover:bg-blue-800 rounded-lg text-normal py-2.5 px-6 mr-3'
-                                            type="submit"
-                                            onClick={() => handleAdvertise(product)}
-                                            disabled={advertisedProducts.find((p) => p.productName === product.name) ? true : false}
-                                        >
+                                        !bookings.find((booking) => booking.productName === product.name) ?
+                                            <span className='inline-block'>
+                                                {
+                                                    product.isAdvertised ? (
+                                                        <button className='bg-lightBlue text-white hover:bg-blue-800 rounded-lg text-normal py-2.5 px-6 mr-3'
 
-                                            {advertisedProducts.find((p) => p.productName === product.name) ? "Advertised" : "Advertise"}
+                                                        >Advertised</button>
+                                                    )
+                                                        :
+                                                        (
+                                                            <button className='bg-lightBlue text-white hover:bg-blue-800 rounded-lg text-normal py-2.5 px-6 mr-3'
+                                                                type="submit"
+                                                                onClick={() => handleAdvertise(product)}
 
-                                        </button> : " "
+                                                            >Advertise</button>
+                                                        )
+                                                }
+
+                                            </span>
+
+
+
+                                            : " "
                                     }
 
 
@@ -195,7 +220,7 @@ const MyProduct = () => {
 
                                     <label
                                         htmlFor="my-modal-3"
-                                        className="bg-red-600 text-white hover:bg-red-500 rounded-lg text-normal py-2.5 px-6"
+                                        className="bg-firstCol text-white hover:bg-secondCol rounded-lg text-normal py-2.5 px-6"
                                         onClick={() => handleDelete(product)}
                                     >Delete</label>
 

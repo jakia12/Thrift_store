@@ -98,14 +98,14 @@ const AllBuyers = () => {
                         {
                             buyers.map((buyer) => (
                                 <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                                    <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <th scope="row" class="py-4 px-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {buyer.name}
                                     </th>
-                                    <td class="py-4 px-6 text-darkBlack text-normal">
+                                    <td class="py-4 px-4 text-darkBlack text-normal">
                                         {buyer.email}
                                     </td>
 
-                                    <td class="py-4 px-6">
+                                    <td class="py-4 px-4">
                                         {buyer?.role !== "admin" ? (<button className='bg-lightBlue text-white hover:bg-blue-800 rounded-lg text-normal py-3 px-7' type="submit"
 
                                             onClick={() => handleMakeAdmin(buyer)}
@@ -113,10 +113,10 @@ const AllBuyers = () => {
                                             Make admin
                                         </button>) : ""}
                                     </td>
-                                    <td class="py-4 px-6">
+                                    <td class="py-4 px-4">
                                         <label
                                             htmlFor="my-modal-3"
-                                            className="bg-red-600 text-white hover:bg-red-500 rounded-lg text-normal py-3 px-7"
+                                            className="bg-firstCol text-white hover:bg-secondCol rounded-lg text-normal py-3 px-7"
                                             onClick={() => handleShow(buyer)}
                                         >Delete</label>
 

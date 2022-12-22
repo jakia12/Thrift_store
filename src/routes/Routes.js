@@ -20,12 +20,14 @@ import CategoryDetails, { loader as categoryLoader } from '../pages/categoryDeta
 import ReportedProducts from '../pages/dashboard/reportedProducts/ReportedProducts';
 import NotFound from '../pages/notFound/NotFound';
 import Blog from "../pages/blog/Blog";
+import Payment, { loader as paymentLoader } from '../pages/dashboard/payment/Payment';
+import DislayError from '../components/displayError/DislayError';
 
 
 
 export const router = createBrowserRouter(createRoutesFromElements(
     <>
-        <Route path='/' element={<Main />}>
+        <Route path='/' element={<Main />} errorElement={<DislayError />}>
 
             <Route path="/" element={<Home />} />
             <Route path="/category/:categoryId" element={<PrivateRoute><CategoryDetails /></PrivateRoute>} loader={categoryLoader} />
@@ -38,8 +40,13 @@ export const router = createBrowserRouter(createRoutesFromElements(
 
         </Route>
 
-        <Route path="/dashboard" element={<PrivateRoute><DashboardLayout /></PrivateRoute>}>
+        <Route path="/dashboard" element={<PrivateRoute><DashboardLayout /></PrivateRoute>} errorElement={<DislayError />}>
             <Route path="/dashboard/myOrders" element={<BuyerRoute><MyOrder /></BuyerRoute>} />
+            <Route path='/dashboard/payment/:id' element={<PrivateRoute>
+                <Payment />
+            </PrivateRoute>} loader={paymentLoader}>
+
+            </Route>
 
             <Route path="/dashboard/addProducts" element={<SellerRoute><AddProduct /></SellerRoute>} />
 
@@ -55,5 +62,6 @@ export const router = createBrowserRouter(createRoutesFromElements(
             <Route path="*" element={<NotFound />} />
 
         </Route>
+
     </>
 ));

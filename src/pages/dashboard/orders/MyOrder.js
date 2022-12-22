@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { AuthState } from '../../../context/AuthProvider';
 
 const MyOrder = () => {
@@ -86,9 +87,24 @@ const MyOrder = () => {
                                         ${booking.resalePrice}
                                     </td>
                                     <td class="py-4 px-6">
-                                        <button className='bg-lightBlue text-white hover:bg-blue-800 rounded-lg text-normal py-3 px-7' type="submit" >
-                                            Pay
-                                        </button>
+                                        {
+                                            booking.paid ?
+                                                (<button className='bg-lightBlue text-white hover:bg-blue-800 rounded-lg text-normal py-3 px-7' type="submit" >
+                                                    Paid
+                                                </button>)
+                                                :
+                                                (
+                                                    // <Link to={`/dashboard/payment/${booking._id}`}></Link>
+                                                    <button
+                                                        className='bg-lightBlue text-white hover:bg-blue-800 rounded-lg text-normal py-3 px-7'
+                                                        type="submit"
+
+                                                    >
+                                                        Pay
+                                                    </button>
+                                                )
+                                        }
+
                                     </td>
                                     <td class="py-4 px-6">
                                         <button className=" text-white py-3 px-7 rounded-lg text-normal  bg-firstCol hover:bg-secondCol" type="submit"

@@ -1,0 +1,7 @@
+.promo_card {
+    padding: 40px 40px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 41vh;
+    transition: all 0.35s ease-in-out;
+}

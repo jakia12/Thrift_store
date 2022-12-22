@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, Navigate, NavLink } from 'react-router-dom'
+import { Link, Navigate, NavLink, useNavigate } from 'react-router-dom'
 import { AuthState } from '../../context/AuthProvider'
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { AiFillCloseCircle } from 'react-icons/ai';
@@ -7,13 +7,17 @@ import "./Header.css";
 
 const Header = () => {
     const { user, logOut, setLoading } = AuthState();
+    const navigate = useNavigate();
 
     const handleLogOut = () => {
         logOut()
             .then(() => {
-
+                navigate('/login');
             })
             .catch(err => console.log(err))
+            .finally(() => {
+                setLoading(false);
+            })
     }
 
 
@@ -26,7 +30,7 @@ const Header = () => {
     return (
         <div>
 
-            <nav className="px-2 py-4 md:py-2 bg-white border-b border-gray-200 darkBlack:bg-gray-900 darkBlack:border-gray-700">
+            <nav className="px-2 py-4 md:py-2 bg-white border-b border-gray-200 darkBlack:bg-gray-900 shadow-md darkBlack:border-gray-700">
                 <div className="container flex flex-wrap items-center justify-between mx-auto">
                     <a href="#" className="flex items-center">
 

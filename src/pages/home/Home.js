@@ -4,9 +4,19 @@ import BookingModal from '../../components/bookingModal/BookingModal';
 import Spinner from '../../components/spinner/Spinner';
 import { AuthState } from '../../context/AuthProvider';
 import { DataState } from '../../context/DataProvider';
-import SellerPhoto from '../../images/avatar/1.jpg';
+
+import { AiOutlineCheck } from 'react-icons/ai';
 import Slider from "react-slick";
+
+import { featureBoxes, promoBanners } from '../../data/PlaceholderData';
+
+import PromoBannerCard from '../../components/promoBannerCard/PromoBannerCard';
+// import PromoBannerCard from '../../components/promoBannerCard/PromoBannerCard';
 import './Home.css';
+import sl1 from '../../images/slider/s1.jpg';
+import FeatureBox from '../../components/featureBox/FeatureBox';
+import Carosels from '../../data/PlaceholderData';
+import SingleProductCard from '../../components/singleProductCard/SingleProductCard';
 
 const Home = () => {
     let uniqueIds = [];
@@ -14,7 +24,10 @@ const Home = () => {
 
     //get the advertised producsts
 
-    const { advertisedProducts, users } = DataState();
+
+
+    const { advertisedProducts, users, verifiedSellers } = DataState();
+
 
     const [loading, setLoading] = useState(true);
 
@@ -73,6 +86,9 @@ const Home = () => {
         autoplaySpeed: 2000,
         fade: true,
     };
+
+
+
     return (
         <>
             {/* product slider  */}
@@ -80,50 +96,36 @@ const Home = () => {
                 <div className='carousel_sec clearfix'>
 
                     <Slider {...settings}>
-                        <div className='slider_1 sl-h'>
+                        {
+                            Carosels.map((carosel) => (
+                                <div className='slider_wrapper' >
 
-                            <div className="slider-content">
-                                <div className="content_wraper text-center first-line:">
-                                    <h2 className='text-4xl font-medium text-white slider_header lg:max-w-3xl max-w-xl pb-4 ' >Get your desired fashionable product withing your budget </h2>
+                                    <div className="slider_content sl-h" style={{
+                                        background: `linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)),url(${carosel.backgroundImg})`,
+                                        backgroundPosition: 'center center',
+                                        backgroundSize: 'cover',
+                                        backgroundRepeat: 'no-repeat'
+                                    }}>
+                                        <div className="content_wraper text-center px-5">
+                                            <div className="flex justify-center">
+                                                <h1 className='lg:text-6xl text-4xl font-medium text-white  uppercase  pb-4 ' >{carosel.sliderTitle}</h1>
+                                            </div>
 
-
-                                    <div className="pt-4">
-                                        <button className=" text-white py-3 px-6   rounded-lg text-lg  bg-firstCol hover:bg-secondCol" type="submit">
-                                            Buy Now
-                                        </button>
+                                            <p className="text-white lg:max-w-3xl max-w-xl">{carosel.sliderSubTitle}</p>
+                                            <div className="pt-6">
+                                                <Link to="/shop">
+                                                    <button className=" text-white py-3 px-6   rounded-lg text-lg  bg-firstCol hover:bg-secondCol" type="submit">
+                                                        {carosel.btnText}
+                                                    </button>
+                                                </Link>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div className='slider_2 sl-h'>
-                            <div className="slider-content">
-                                <div className="content_wraper text-center first-line:">
-                                    <h2 className='text-4xl font-medium text-white slider_header lg:max-w-3xl max-w-xl pb-4 ' >Get your desired fashionable product withing your budget </h2>
+                            ))
+                        }
 
-
-                                    <div className="pt-4">
-                                        <button className=" text-white py-3 px-6   rounded-lg text-lg  bg-firstCol hover:bg-secondCol" type="submit">
-                                            Buy Now
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className='slider_3 sl-h'>
-                            <div className="slider-content">
-                                <div className="content_wraper text-center first-line:">
-                                    <h2 className='text-4xl font-medium text-white slider_header lg:max-w-3xl max-w-xl pb-4 ' >Get your desired fashionable product withing your budget </h2>
-
-                                    <div className="pt-4">
-                                        <button className=" text-white py-3 px-6   rounded-lg text-lg  bg-firstCol hover:bg-secondCol" type="submit">
-                                            Buy Now
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
 
 
@@ -134,6 +136,24 @@ const Home = () => {
                 </div>
 
             </section>
+
+            {/* promo banner section */}
+            <section className="py-8 ">
+                <div className="container mx-auto lg:max-w-7xl">
+                    <div className="flex flex-wrap lg:flex-nowrap">
+                        {
+                            promoBanners.map((banner) => (
+                                <PromoBannerCard
+                                    key={banner.id}
+                                    banner={banner}
+
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
+            </section>
+
             <section className='py-14 lg:py-20'>
                 <div className="container mx-auto w-full lg:max-w-6xl ">
                     <div className="text-center pb-8">
@@ -143,12 +163,12 @@ const Home = () => {
                         <div className="bg-firstCol w-20 h-1 mx-auto mt-4"></div>
                     </div>
 
-                    {/* product category column */}
+
                     {loading ? <Spinner /> : ""}
                     <div className="flex flex-wrap">
                         {
                             unique ? (unique.map((category) => (
-                                <div className="sm:w-6/12 md:w-3/12 xs:mx-auto sm:mx-0" key={category.id}>
+                                <div className="sm:w-6/12 md:w-3/12 mx-auto sm:mx-0" key={category.id}>
                                     <div className="m-3 relative overlay rounded">
                                         <img src={category.image} alt="" className="w-full rounded" />
                                         <div className="absolute top-24 left-10 cat_content">
@@ -170,7 +190,7 @@ const Home = () => {
 
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* advertised items */}
             <section className="py-14 lg:py-20 bg-gray-50">
@@ -184,20 +204,24 @@ const Home = () => {
                     <div className="flex flex-wrap">
                         {
                             advertisedProducts.map((product) => (
-                                <div className="sm:w-6/12 md:w-4/12 xs:mx-auto sm:mx-0">
-                                    <div className="m-4 shadow-lg shadow-gray-200">
+                                <div className="xs:12/12 sm:w-6/12 md:w-4/12 mx-auto sm:mx-0">
+                                    {/* <div className="m-4 shadow-lg shadow-gray-200">
                                         <div className="relative overlay">
-                                            <img src={product.image} alt="" className="rounded w-full prod_img h-96" />
+                                            <img src={product.image} alt="" className="rounded w-full prod_img h-96 text-white" />
                                             <div className="bg-firstCol py-2 px-8 rounded absolute top-6 right-6 text-white cat_content">
                                                 {product.location}
                                             </div>
                                             <div className="flex justify-between items-center absolute top-2/3 left-6 cat_content">
-                                                <img src={SellerPhoto} alt="" className=" rounded-full border-2 border-firstCol" width="70px" height="70px" />
+                                                <img src={product.sellerPhoto} alt="Seller Photo" className="seller_photo  rounded-full border-2 border-firstCol" width="70px" height="70px" />
                                                 <div>
-                                                    <span className="ml-4 text-white text-normal block text-center">
+                                                    {
+                                                        verifiedSellers.find((vSeller) => vSeller.name === product.sellerName) ?
+                                                            <span className="ml-4 text-white text-lg inline-block text-center">
+                                                                <AiOutlineCheck />
+                                                            </span> : ""
+                                                    }
 
-                                                    </span>
-                                                    <span className="ml-4 text-white">{user?.displayName} </span>
+                                                    <span className="ml-2 text-white text-lg inline-block"> {product.sellerName}</span>
                                                 </div>
 
                                             </div>
@@ -246,11 +270,31 @@ const Home = () => {
                                                     />
                                                 )}
                                         </div>
-                                    </div>
+                                    </div> */}
+                                    <SingleProductCard
+                                        key={product._id}
+                                        product={product}
+                                    />
                                 </div>
                             ))
                         }
                     </div>
+                </div>
+            </section>
+
+            <section className="py-14 lg:py-20">
+                <div className="container mx-auto lg:max-w-6xl w-full">
+                    <div className="flex flex-wrap lg:flex-nowrap">
+                        {
+                            featureBoxes.map((box) => (
+                                <FeatureBox
+                                    key={box.id}
+                                    box={box}
+                                />
+                            ))
+                        }
+                    </div>
+
                 </div>
             </section>
         </>

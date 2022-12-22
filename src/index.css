@@ -88,3 +88,9 @@ option[value=""][disabled] {
         border-bottom: 0;
     }
 }
+
+/******img alt tag*******/
+.seller_photo {
+    color: #fff;
+    font-size: 13px
+}

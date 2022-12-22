@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 const SignUp = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const { user, createUser, setLoading, updateUserProfile, setUserTypeVal, userTypeVal } = AuthState();
+    const { user, createUser, setLoading, loading, updateUserProfile, setUserTypeVal, userTypeVal } = AuthState();
 
     const [createdUserEmail, setCreatedUserEmail] = useState('');
 
@@ -48,8 +48,30 @@ const SignUp = () => {
     const customId1 = "custom-id-yes";
     const customId2 = "custom-id-no";
     //submit the form
+
+    //get the secret photobb api key
+    const photoApiKey = process.env.REACT_APP_IMG_API_KEY;
+
     const handleSignUp = (data) => {
         console.log(data.userType);
+
+        // const photo = data.photo[0];
+        // console.log(photo)
+        // const formData = new FormData();
+        // formData.append('photo', photo);
+
+        // const url = `https://api.imgbb.com/1/upload?key=${photoApiKey}`;
+
+        // fetch(url, {
+        //     method: 'POST',
+        //     body: formData
+
+        // })
+        //     .then(res => res.json())
+        //     .then(photoData => {
+        //         console.log(photoData);
+        //     })
+        //     .catch(err => console.log(err))
 
         createUser(data.email, data.password)
             .then((res) => {
@@ -86,6 +108,7 @@ const SignUp = () => {
 
         const handleUpdateUser = () => {
             const profile = {
+                photoURL: data.photo,
                 displayName: data.name,
 
             };
@@ -157,6 +180,19 @@ const SignUp = () => {
                             {errors.name && <p className='text-red-500 mt-1'>{errors.name.message}</p>}
                         </div>
                         <div className="mb-1">
+                            <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">User photo Url</label>
+
+                            <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg  bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="text" placeholder="User Photo Url"
+                                {...register("photo", {
+                                    required: "User photo Url is required",
+
+
+                                })}
+                            />
+
+                            {errors.photo && <p className='text-red-500 mt-1'>{errors.photo.message}</p>}
+                        </div>
+                        <div className="mb-1">
                             <label for="email"
                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
                             <input
@@ -205,7 +241,7 @@ const SignUp = () => {
                             {errors.password && <p className='text-red-500 mt-1'>{errors.password.message}</p>}
                         </div>
                         <button className=" text-white py-2 rounded-lg text-lg  bg-firstCol hover:bg-secondCol" type="submit">
-                            Register
+                            Sign Up
                         </button>
                     </form>
                     <div className="flex justify-between items-center py-6">

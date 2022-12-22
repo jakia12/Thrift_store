@@ -15,3 +15,27 @@
 .side_nav.active {
     left: 0;
 }
+
+.divider_line {
+    border: none;
+    background-color: #666;
+    height: 1px;
+}
+
+/***user image style****/
+.user_image {
+    width: 180px;
+    height: 180px;
+}
+
+@media only screen and (max-width: 576px) {
+    .user_image {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+/********drayer height******/
+.drawer_height {
+    min-height: 560px;
+}

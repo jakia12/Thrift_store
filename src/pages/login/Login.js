@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { login, setLoading, user, googleSignIn } = AuthState();
+    const { login, setLoading, loading, user, googleSignIn } = AuthState();
 
     //form validation by hook form
 
@@ -60,18 +60,21 @@ const Login = () => {
                 console.log(err);
                 setError(err.message)
             })
+            .finally(() => {
+                setLoading(false);
+            })
     }
 
-    //google login
-    // const handleGoogleLogin = () => {
-    //     googleSignIn()
-    //         .then(res => {
-    //             const user = res.user;
+    //  google login
+    const handleGoogleLogin = () => {
+        googleSignIn()
+            .then(res => {
+                const user = res.user;
 
-    //             console.log(user);
-    //         })
-    //         .catch(err => console.log(err))
-    // }
+                console.log(user);
+            })
+            .catch(err => console.log(err))
+    }
     return (
         <section className=" login_section lg:py-20 py-14 bg-nudeBlue ">
             <div className='container mx-auto lg:max-w-7xl md:px-10 px-6'>
@@ -112,11 +115,11 @@ const Login = () => {
                             {errors.password && <p className='text-red-500 mt-1'>{errors.password.message}</p>}
                         </div>
 
-
-
                         <button className='bg-firstCol text-white hover:bg-secondCol py-2 rounded-lg text-lg' type="submit" >
                             Login
                         </button>
+
+
                     </form>
                     <div className="flex justify-between items-center py-6">
                         <span className="text-normal text-dark font-normal ">Not signed up yet?</span><span className="text-dark text-normal font-normal"> <Link to="/signUp" className='underline'>Sign Up here</Link></span>
@@ -127,7 +130,7 @@ const Login = () => {
                         <button
                             type="button"
                             className="text-white bg-lightBlue hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-14 py-3 mt-6 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                        //onClick={handleGoogleLogin}
+                            onClick={handleGoogleLogin}
                         >
                             <div className="flex items-center">
                                 <span className="text-xl text-white inline-block "><AiOutlineGoogle />

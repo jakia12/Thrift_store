@@ -80,8 +80,33 @@ const DataProvider = ({ children }) => {
     }, []);
 
 
+    //fetch verified seller data
 
-    const getInfo = { bookings, advertisedProducts, users, sellers, setSellers }
+    const [verifiedSellers, setVerifiedSellers] = useState([]);
+    useEffect(() => {
+        axios.get('https://vendor-store-server.vercel.app/users/verifiedSellers')
+            .then((response) => {
+                setVerifiedSellers(response.data);
+                console.log(verifiedSellers);
+            })
+
+            .catch(err => console.log(err))
+
+
+    }, []);
+
+    //get all products
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        axios.get('https://vendor-store-server.vercel.app/products')
+            .then(response => {
+                setProducts(response.data);
+                console.log(products);
+            })
+    }, []);
+
+    const getInfo = { bookings, advertisedProducts, users, sellers, setSellers, verifiedSellers, products }
     return (
         <DataContext.Provider value={getInfo}>
             {children}
