@@ -6,7 +6,7 @@ Live site link:  [Thrift store](https://vendor-store-b2ba5.web.app/).
 
 Thrift store is an online store where people can buy any second hand clothes
 
-## Technology that i used to create this application:
+## Technology  that i used to create this application:
 * Html
 * Css
 * Tailwind css
@@ -14,6 +14,10 @@ Thrift store is an online store where people can buy any second hand clothes
 * React router 
 * Node
 * Express
+
+## Tools were being used
 * Firebase authentication
 * Jwt authourization
-* 
+* React stripe
+* React Query
+
