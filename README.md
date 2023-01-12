@@ -23,7 +23,7 @@ Thrift store is an online store where 3 types of users will play their role. Suc
 
 ### Seller Role Activities
 
-* a seller can sell his products after getting registered and verified.
+* a seller can sell used products after getting registered and verified.
 * An unverified seller will not be allowed to add a product.
 * Where a seller can advertise their unsold products from the dashboard.
 * He/she can delete products anytime with a confirmation modal
