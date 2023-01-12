@@ -19,10 +19,15 @@ Thrift store is an online store where 3 types of users will play their role. Suc
 
 * a seller can sell his products after getting registered and verified.
 * An unverified seller will not be allowed to add a product.
-* Where a seller can advertise their unsold products.
+* Where a seller can advertise their unsold products from the dashboard.
 * He/she can delete products anytime with a confirmation modal
 
 ### Buyer Role Activities
+
+* A Buyer can purchase or book a product and after booking, that product will be listed to My Products Route in Dashboard.
+* He/she can delete That product from the booking list.
+* A Buyer can pay for the product after clicking on pay button from the booking list in Dashboard.
+* A Buyer can pay using stripe payment method which was integreted successfully.
 
 ## Technology  that i used to create this application:
 * Html
