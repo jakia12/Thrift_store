@@ -20,4 +20,6 @@ Thrift store is an online store where people can buy any second hand clothes
 * Jwt authourization
 * React stripe
 * React Query
-
+* Axios
+* React Toastify
+* Rechart Js
