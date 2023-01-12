@@ -3,7 +3,7 @@
 Live site link:  [Thrift store](https://vendor-store-b2ba5.web.app/).
 
 ## Login Credentials
-Please Login as a verified seller and an admin: email: kebin@gmail.com ,  password: Kebin@123
+<p>Please Login as a verified seller and an admin: email: kebin@gmail.com ,  password: Kebin@123</p>
 Please login as a unverified seller: email: gerick@gmail.com , password: Gerick@123
 Please login as a buyer : email: anaya@gmail.com ,  password: Anaya@123
 
