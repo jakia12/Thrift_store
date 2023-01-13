@@ -35,6 +35,12 @@ Thrift store is an online store where 3 types of users will play their role. Suc
 * A Buyer can pay for the product after clicking on pay button from the booking list in Dashboard.
 * A Buyer can pay using stripe payment method which was integreted successfully.
 
+## Exclusive Features
+* Admin Dashboard
+* User Registration
+* Stripe payment method
+* Instant Product Booking
+
 ## Technology  that i used to create this application:
 * Html
 * Css
@@ -44,7 +50,7 @@ Thrift store is an online store where 3 types of users will play their role. Suc
 * Node
 * Express
 
-## Tools were being used
+## Tools being used
 * Firebase authentication
 * Jwt authourization
 * React stripe
