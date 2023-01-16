@@ -5,6 +5,8 @@ import { AiOutlineGoogle } from 'react-icons/ai';
 import { AuthState } from '../../context/AuthProvider';
 import { useForm } from 'react-hook-form';
 import useToken from '../../hooks/useToken';
+import { RiEyeCloseLine } from 'react-icons/ri';
+import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
 const Login = () => {
@@ -75,6 +77,17 @@ const Login = () => {
             })
             .catch(err => console.log(err))
     }
+
+    //state to display the password as text
+
+    const [isDisplayText, setIsDisplayText] = useState(false);
+
+    //display password as a text clicking on eye icon
+    const handleDisplayText = (e) => {
+
+        e.preventDefault();
+        isDisplayText === true ? setIsDisplayText(false) : setIsDisplayText(true);
+    }
     return (
         <section className=" login_section lg:py-20 py-14 bg-nudeBlue ">
             <div className='container mx-auto lg:max-w-7xl md:px-10 px-6'>
@@ -100,10 +113,10 @@ const Login = () => {
                             />
                             {errors.email && <p className='text-red-500 mt-1'>{errors.email.message}</p>}
                         </div>
-                        <div className="mb-1">
+                        <div className="mb-1 relative">
                             <label for="confirm_password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Password</label>
                             <input
-                                type="password"
+                                type={isDisplayText ? "text" : "password"}
                                 id="password"
                                 className={`bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${(errors.password ? " border border-red-500 focus:border-red-500" : " border border-gray-300 focus:border-blue-500")}`} placeholder="Your password"
                                 {...register("password", {
@@ -112,6 +125,27 @@ const Login = () => {
 
                                 })}
                             />
+                            <button
+                                className='absolute top-9 right-4'
+                                onClick={handleDisplayText}
+                            >
+                                {
+                                    isDisplayText ?
+                                        (
+                                            <span className="text-2xl text-dark ">
+
+                                                < MdOutlineRemoveRedEye />
+                                            </span>
+                                        )
+                                        :
+                                        (
+                                            <span className="text-2xl text-dark ">
+                                                <RiEyeCloseLine />
+                                            </span>
+                                        )
+                                }
+
+                            </button>
                             {errors.password && <p className='text-red-500 mt-1'>{errors.password.message}</p>}
                         </div>
 

@@ -1,0 +1,46 @@
+/******pagination design********/
+
+
+
+
+
+.paginate-ctn {
+    display: flex;
+}
+
+.round_effect {
+    color: #DA3C3C;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    margin: 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    text-decoration: none;
+}
+
+.round_effect:hover {
+    text-decoration: none;
+    background: #DA3C3C;
+    color: #FFF;
+}
+
+.round_effect:hover a {
+    text-decoration: none;
+    color: #FFF;
+}
+
+.active {
+    background: #DA3C3C;
+    color: #FFF;
+}
+
+.arrow_btn {
+    font-size: 25px;
+    background-color: #DA3C3C;
+    color: #fff;
+}

@@ -22,7 +22,9 @@ const Payment = () => {
                 <h2 className='text-2xl capitalize font-medium py-4 text-darkBlack text-center'>Payment for {productName}</h2>
                 <div className="py-10 w-96">
                     <Elements stripe={stripePromise}>
-                        <CheckForm />
+                        <CheckForm
+                            booking={booking}
+                        />
                     </Elements>
                 </div>
             </div>

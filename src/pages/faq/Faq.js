@@ -2,13 +2,18 @@ import React from 'react'
 
 import { Accordion } from 'flowbite-react';
 
-const Blog = () => {
+const Faq = () => {
 
     //create dynamic title
 
     return (
-        <section className='accordion_section bg-lightGray py-14 lg:py-20'>
+        <section className='accordion_section bg-white py-14 lg:py-20'>
             <div className="container w-full mx-auto lg:max-w-6xl px-8">
+                <div className="py-6 mb-3 text-center">
+                    <h2 className="text-4xl font-medium textdark">
+                        Frequently Asked questions
+                    </h2>
+                </div>
                 <div className="accordion_wrapper lg:max-w-3xl mx-auto">
                     <Accordion alwaysOpen={true}>
                         <Accordion.Panel>
@@ -69,4 +74,4 @@ const Blog = () => {
     )
 }
 
-export default Blog
+export default Faq

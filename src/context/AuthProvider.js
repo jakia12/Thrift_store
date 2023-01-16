@@ -10,6 +10,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
+
     //get the user type
 
     const [userTypeVal, setUserTypeVal] = useState('');
@@ -65,7 +66,7 @@ const AuthProvider = ({ children }) => {
         return signInWithPopup(auth, googleProvider);
     }
 
-    const getInfo = { user, setLoading, loading, createUser, logOut, login, updateUserProfile, resetPassword, userTypeVal, setUserTypeVal, googleSignIn }
+    const getInfo = { user, setLoading, loading, createUser, logOut, login, updateUserProfile, resetPassword, googleSignIn }
 
     return (
         <AuthContext.Provider value={getInfo}>

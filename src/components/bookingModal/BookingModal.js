@@ -152,7 +152,7 @@ const BookingModal = ({ productInfo, setProductInfo, }) => {
                         </div>
 
                         <button className='bg-firstCol text-white hover:bg-secondCol py-2 rounded-lg text-lg' type="submit" >
-                            Submit
+                            Purchase
                         </button>
                     </form>
                 </div>

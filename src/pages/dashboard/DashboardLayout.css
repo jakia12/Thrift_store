@@ -12,7 +12,7 @@
     transition: 0.7s;
 }
 
-.side_nav.active {
+.side_nav.activ {
     left: 0;
 }
 

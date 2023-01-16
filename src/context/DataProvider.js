@@ -7,10 +7,11 @@ const DataContext = createContext();
 const DataProvider = ({ children }) => {
 
     const [bookings, setBookings] = useState([])
-
+    const [isSaving, setIsSaving] = useState(false);
     const [advertisedProducts, setAdvertisedProducts] = useState([]);
 
     const [users, setUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     //fetch booking data
     useEffect(() => {
@@ -19,13 +20,14 @@ const DataProvider = ({ children }) => {
             .then(data => {
                 // console.log(data);
                 setBookings(data);
+                setIsLoading(false);
 
             })
             .catch(err => console.log(err))
 
     }, []);
 
-    // fetch advertised data
+    // // fetch advertised data
     useEffect(() => {
         fetch('https://vendor-store-server.vercel.app/advertisedProducts',
 
@@ -34,6 +36,7 @@ const DataProvider = ({ children }) => {
             .then(data => {
                 console.log(data);
                 setAdvertisedProducts(data);
+                setIsLoading(false);
 
             })
             .catch(err => console.log(err))
@@ -54,6 +57,7 @@ const DataProvider = ({ children }) => {
         axios.get('https://vendor-store-server.vercel.app/users')
             .then((response) => {
                 setUsers(response.data);
+                setIsLoading(false);
             })
 
             .catch(err => console.log(err))
@@ -73,6 +77,7 @@ const DataProvider = ({ children }) => {
             .then((response) => {
                 setSellers(response.data);
                 console.log(sellers);
+                setIsLoading(false);
             })
 
             .catch(err => console.log(err))
@@ -88,6 +93,8 @@ const DataProvider = ({ children }) => {
             .then((response) => {
                 setVerifiedSellers(response.data);
                 console.log(verifiedSellers);
+                setIsLoading(false);
+
             })
 
             .catch(err => console.log(err))
@@ -103,10 +110,11 @@ const DataProvider = ({ children }) => {
             .then(response => {
                 setProducts(response.data);
                 console.log(products);
+                setIsLoading(false);
             })
     }, []);
 
-    const getInfo = { bookings, advertisedProducts, users, sellers, setSellers, verifiedSellers, products }
+    const getInfo = { bookings, advertisedProducts, users, sellers, setSellers, verifiedSellers, products, isSaving, setIsSaving, isLoading, setIsLoading }
     return (
         <DataContext.Provider value={getInfo}>
             {children}

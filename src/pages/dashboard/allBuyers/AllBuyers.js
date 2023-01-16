@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
 import DeleteModal from '../../../components/deleteModal/DeleteModal';
+import Spinner from '../../../components/spinner/Spinner';
 
 
 const AllBuyers = () => {
@@ -10,7 +11,7 @@ const AllBuyers = () => {
 
     const [buyerQuery, setBuyerQuery] = useState('buyer');
 
-    const { data: buyers = [], refetch } = useQuery({
+    const { data: buyers = [], refetch, isLoading, isFetching } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
             const res = await fetch(`https://vendor-store-server.vercel.app/users?userType=${buyerQuery}`);
@@ -74,8 +75,10 @@ const AllBuyers = () => {
     }
     return (
         <section className='py-8 ml-2'>
-
-            <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+            <div className={`py-10 ${(isLoading ? "block" : "hidden")}`}>
+                <Spinner />
+            </div>
+            <div class="overflow-x-auto relative shadow-md sm:rounded-lg px-7">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -97,7 +100,7 @@ const AllBuyers = () => {
                     <tbody>
                         {
                             buyers.map((buyer) => (
-                                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                <tr class="border-b shadow-lg shadow-gray-100 m-3 md:shadow-none md:rounded-none md:m-0 dark:bg-gray-900 dark:border-gray-700 bg-gray-100">
                                     <th scope="row" class="py-4 px-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {buyer.name}
                                     </th>

@@ -2,6 +2,7 @@ import React from 'react'
 import BookingModal from '../bookingModal/BookingModal';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { MdReportProblem } from 'react-icons/md';
+import { BsFillSuitHeartFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { DataState } from '../../context/DataProvider';
@@ -29,6 +30,7 @@ const SingleProductCard = ({ product }) => {
     const handleReport = (product) => {
 
         const reportedProduct = {
+            productId: product?._id,
             productName: product?.name,
             categoryName: product?.categoryName,
             image: product?.image,
@@ -42,7 +44,7 @@ const SingleProductCard = ({ product }) => {
             sellerEmail: product?.sellerEmail
 
         };
-
+        console.log(reportedProduct);
         fetch('https://vendor-store-server.vercel.app/reportedProducts', {
             method: "POST",
             headers: {
@@ -109,14 +111,17 @@ const SingleProductCard = ({ product }) => {
                     <h3 className="text-lg font-semibold text-darkBlack mb-4">
                         {product.name}
                     </h3>
-                    <button
-                        className='ml-auto mb-4'
-                        onClick={() => handleReport(product)}
-                    >
-                        <span className="text-gray-400  text-2xl" title='Report to Admin'>
-                            <MdReportProblem />
-                        </span>
-                    </button>
+                    <div className="tooltip ml-auto " data-tip="Report to Admin">
+                        <button
+                            className=' mb-4'
+                            onClick={() => handleReport(product)}
+                        >
+                            <span className="text-gray-400  text-2xl" >
+                                <MdReportProblem />
+                            </span>
+                        </button>
+                    </div>
+
                 </div>
                 <h4 className="text-normal font-normal text-darkBlack mb-3">
                     Original Price : ${product.originalPrice}
@@ -137,16 +142,18 @@ const SingleProductCard = ({ product }) => {
                             (
                                 <label
                                     htmlFor="my-modal-3"
-                                    className="bg-firstCol text-white hover:bg-secondCol rounded-lg text-sm py-3 px-6"
+                                    className="bg-firstCol text-white hover:bg-secondCol rounded-lg text-sm py-3 px-6 cursor-pointer"
                                     onClick={() => handleShow(product)}
                                 >Purchase Now</label>
+
+
                             ) :
                             (
                                 // <Link to="/login">
 
                                 // </Link>
                                 <button
-                                    className='bg-firstCol text-white hover:bg-secondCol rounded-lg text-sm py-3 px-6'
+                                    className='bg-firstCol text-white hover:bg-secondCol rounded-lg text-sm py-3 px-6 cursor-pointer'
                                     onClick={handleClick}
                                 >
                                     Purchase Now

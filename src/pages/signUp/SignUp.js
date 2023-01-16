@@ -5,6 +5,8 @@ import './SignUp.css';
 import { AuthState } from '../../context/AuthProvider';
 import { useForm } from 'react-hook-form';
 import useToken from '../../hooks/useToken';
+import { RiEyeCloseLine } from 'react-icons/ri';
+import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
 
@@ -12,7 +14,7 @@ import { toast } from 'react-toastify';
 const SignUp = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const { user, createUser, setLoading, loading, updateUserProfile, setUserTypeVal, userTypeVal } = AuthState();
+    const { user, createUser, setLoading, loading, updateUserProfile, } = AuthState();
 
     const [createdUserEmail, setCreatedUserEmail] = useState('');
 
@@ -34,8 +36,9 @@ const SignUp = () => {
     //navigate to homepage after signup
     const navigate = useNavigate();
 
+    //state to display the password as text
 
-    //state for form validation
+    const [isDisplayText, setIsDisplayText] = useState(false);
 
 
 
@@ -69,7 +72,7 @@ const SignUp = () => {
         // })
         //     .then(res => res.json())
         //     .then(photoData => {
-        //         console.log(photoData);
+        //         console.log(photoData.data);
         //     })
         //     .catch(err => console.log(err))
 
@@ -94,8 +97,7 @@ const SignUp = () => {
                     return state;
                 });
 
-                setUserTypeVal(value);
-                //console.log(userTypeVal);
+
 
 
             })
@@ -121,7 +123,7 @@ const SignUp = () => {
                 .catch(err => console.log(err))
         }
     }
-    // 
+
 
 
 
@@ -152,7 +154,12 @@ const SignUp = () => {
             .catch(err => console.log(err))
     }
 
+    //display password as a text clicking on eye icon
+    const handleDisplayText = (e) => {
 
+        e.preventDefault();
+        isDisplayText === true ? setIsDisplayText(false) : setIsDisplayText(true);
+    }
 
     return (
         <section className=" register_section lg:py-20 py-14 bg-nudeBlue">
@@ -226,10 +233,10 @@ const SignUp = () => {
                             </select>
                             {errors.userType && <p className='text-red-500 mt-1'>{errors.userType.message}</p>}
                         </div>
-                        <div className="mb-1">
+                        <div className="mb-1 relative">
                             <label for="confirm_password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Password</label>
                             <input
-                                type="password"
+                                type={isDisplayText ? "text" : "password"}
                                 id="password"
                                 className={`bg-gray-50 text-gray-900 text-sm rounded-lg focus:ring-blue-500  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${(errors.password ? " border border-red-500 focus:border-red-500" : " border border-gray-300 focus:border-blue-500")}`} placeholder="Your password"
                                 {...register("password", {
@@ -238,6 +245,28 @@ const SignUp = () => {
                                     pattern: { value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/, message: 'Password must have uppercase, number and special characters' }
                                 })}
                             />
+                            <button
+                                className='absolute top-9 right-4'
+                                onClick={handleDisplayText}
+                            >
+                                {
+                                    isDisplayText ?
+                                        (
+                                            <span className="text-2xl text-dark ">
+
+                                                < MdOutlineRemoveRedEye />
+                                            </span>
+                                        )
+                                        :
+                                        (
+                                            <span className="text-2xl text-dark ">
+                                                <RiEyeCloseLine />
+                                            </span>
+                                        )
+                                }
+
+                            </button>
+
                             {errors.password && <p className='text-red-500 mt-1'>{errors.password.message}</p>}
                         </div>
                         <button className=" text-white py-2 rounded-lg text-lg  bg-firstCol hover:bg-secondCol" type="submit">
