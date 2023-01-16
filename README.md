@@ -2,11 +2,46 @@
 
 Live site link:  [Thrift store](https://vendor-store-b2ba5.web.app/).
 
+## Login Credentials
+<p>Please Login as a verified seller and an admin: email: kebin@gmail.com ,  password: Kebin@123</p>
+<p>Please login as a unverified seller: email: gerick@gmail.com , password: Gerick@123</p>
+<p>Please login as a buyer : email: anaya@gmail.com ,  password: Anaya@123</p>
+
+
 ## Description 
 
-Thrift store is an online store where people can buy any second hand clothes
+Thrift store is an online store where 3 types of users will play their role. Such as:-
+* Admin
+* Seller
+* Buyer
 
-## Technology that i used to create this application:
+### Admin role Activities
+
+* An Admin can remove a seller, a buyer and reported products as well
+* He/she can make an admin among the sellers and buyers.
+* An Admin can verify a seller.
+
+### Seller Role Activities
+
+* a seller can sell used products after getting registered and verified.
+* An unverified seller will not be allowed to add a product.
+* Where a seller can advertise their unsold products from the dashboard.
+* He/she can delete products anytime with a confirmation modal
+
+### Buyer Role Activities
+
+* A Buyer can purchase or book a product and after booking, that product will be listed to My Products Route in Dashboard.
+* He/she can delete That product from the booking list.
+* A Buyer can pay for the product after clicking on pay button from the booking list in Dashboard.
+* A Buyer can pay using stripe payment method which was integreted successfully.
+
+## Exclusive Features
+* Admin Dashboard
+* User Registration
+* Stripe payment method
+* Instant Product Booking
+
+## Technology  that i used to create this application:
 * Html
 * Css
 * Tailwind css
@@ -14,6 +49,12 @@ Thrift store is an online store where people can buy any second hand clothes
 * React router 
 * Node
 * Express
+
+## Tools being used
 * Firebase authentication
 * Jwt authourization
-* 
+* React stripe
+* React Query
+* Axios
+* React Toastify
+* Rechart Js
