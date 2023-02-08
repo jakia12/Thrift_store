@@ -10,7 +10,7 @@ Live site link:  [Thrift store](https://vendor-store-b2ba5.web.app/).
 
 ## Description 
 
-Thrift store is an online store where 3 types of users will play their role. Such as:-
+Thrift store is an online ecommerce store where people can buy re-used clothes within an affordable price .this application will have 3 types of users will play their role. Such as:-
 * Admin
 * Seller
 * Buyer
